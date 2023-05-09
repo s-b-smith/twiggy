@@ -5,5 +5,13 @@
     "editor.formatOnSave": true, 
     "editor.formatOnSaveMode": "file",
     "files.autoSave": "onFocusChange",
-    "vs-code-prettier-eslint.prettierLast": false
+    "vs-code-prettier-eslint.prettierLast": false,
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "typescript": "typescriptreact"
+    },
+    "emmet.syntaxProfiles": {
+        "javascript": "jsx",
+        "typescript": "tsx"
+    }
 }
