@@ -15,10 +15,8 @@ import {
   useTheme,
   Toolbar,
   Typography,
-  Box,
-  Stack
+  Box
 } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
 import { ChevronLeft, ChevronRight, Inbox, Mail, Menu } from '@mui/icons-material';
 import { useState } from 'react';
 
@@ -101,42 +99,20 @@ const NavDrawer = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar position="fixed" open={open}>
-        <Toolbar>
-          {/* <Grid container spacing={3}>
-            <Grid xs={3} justifyContent="left">
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                sx={{ mr: 5, ...(open && { display: 'none' }) }}
-              >
-                <Menu />
-              </IconButton>
-            </Grid>
-            <Grid xs={9} justifyContent="left">
-              <Typography variant="h6" noWrap component="div" alignContent="center">
-                Twiggy
-              </Typography>
-            </Grid>
-          </Grid> */}
-          {/* <Box display="flex" justifyContent="center" alignItems="center">
-            <Typography variant="h6" noWrap component="div" alignContent="center">
-              Twiggy
-            </Typography>
-          </Box> */}
-          {/* <Stack direction="row" alignItems="center" spacing={2}> */}
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            sx={{ mr: 5, ...(open && { display: 'none' }) }}
-          >
-            <Menu />
-          </IconButton>
+        <Toolbar sx={{ justifyContent: 'center' }}>
+          <Box position="absolute" top={10} left={10}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              sx={{ mr: 5, ...(open && { display: 'none' }) }}
+            >
+              <Menu />
+            </IconButton>
+          </Box>
           <Typography variant="h6" noWrap component="div" alignContent="center">
             Twiggy
           </Typography>
-          {/* </Stack> */}
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" anchor="left" open={open}>
