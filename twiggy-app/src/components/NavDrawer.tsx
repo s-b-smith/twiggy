@@ -1,25 +1,26 @@
+import { Checkroom, ChevronLeft, ChevronRight, EmojiEmotions, Menu, Palette, Wallpaper } from '@mui/icons-material';
 import {
-  AppBar as MuiAppBar,
-  AppBarProps as MuiAppBarProps,
+  Box,
   CSSObject,
   Divider,
-  Drawer as MuiDrawer,
   IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  AppBar as MuiAppBar,
+  AppBarProps as MuiAppBarProps,
+  Drawer as MuiDrawer,
   Theme,
-  styled,
-  useTheme,
   Toolbar,
   Typography,
-  Box
+  styled,
+  useTheme
 } from '@mui/material';
-import { ChevronLeft, ChevronRight, Inbox, Mail, Menu } from '@mui/icons-material';
 import { useState } from 'react';
 
+const drawerOptions = ['Body', 'Clothes', 'Color', 'Background'];
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -96,18 +97,31 @@ const NavDrawer = () => {
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
 
+  const getNavIcon = (index: number) => {
+    switch (index) {
+      case 0:
+        return <EmojiEmotions fontSize="large" />;
+      case 1:
+        return <Checkroom fontSize="large" />;
+      case 2:
+        return <Palette fontSize="large" />;
+      case 3:
+        return <Wallpaper fontSize="large" />;
+    }
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar position="fixed" open={open}>
         <Toolbar sx={{ justifyContent: 'center' }}>
-          <Box position="absolute" top={10} left={10}>
+          <Box position="absolute" top={3} left={3}>
             <IconButton
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
               sx={{ mr: 5, ...(open && { display: 'none' }) }}
             >
-              <Menu />
+              <Menu fontSize="large" />
             </IconButton>
           </Box>
           <Typography variant="h6" noWrap component="div" alignContent="center">
@@ -118,12 +132,12 @@ const NavDrawer = () => {
       <Drawer variant="permanent" anchor="left" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
+            {theme.direction === 'rtl' ? <ChevronRight fontSize="large" /> : <ChevronLeft fontSize="large" />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {drawerOptions.map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -139,7 +153,7 @@ const NavDrawer = () => {
                     justifyContent: 'center'
                   }}
                 >
-                  {index % 2 === 0 ? <Inbox /> : <Mail />}
+                  {getNavIcon(index)}
                 </ListItemIcon>
                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
