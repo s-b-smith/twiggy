@@ -124,7 +124,15 @@ const NavDrawer = () => {
               <Menu fontSize="large" />
             </IconButton>
           </Box>
-          <Typography variant="h6" noWrap component="div" alignContent="center">
+          <Typography
+            sx={{
+              fontFamily: 'WigglyCurves'
+            }}
+            variant="h4"
+            noWrap
+            component="div"
+            alignContent="center"
+          >
             Twiggy
           </Typography>
         </Toolbar>
