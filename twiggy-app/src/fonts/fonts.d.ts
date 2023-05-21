@@ -1,1 +1,2 @@
-declare module '*.tff';
+declare module '*.ttf';
+declare module '*.otf';

@@ -100,13 +100,13 @@ const NavDrawer = () => {
   const getNavIcon = (index: number) => {
     switch (index) {
       case 0:
-        return <EmojiEmotions fontSize="large" />;
+        return <EmojiEmotions />;
       case 1:
-        return <Checkroom fontSize="large" />;
+        return <Checkroom />;
       case 2:
-        return <Palette fontSize="large" />;
+        return <Palette />;
       case 3:
-        return <Wallpaper fontSize="large" />;
+        return <Wallpaper />;
     }
   };
 
@@ -121,14 +121,14 @@ const NavDrawer = () => {
               onClick={handleDrawerOpen}
               sx={{ mr: 5, ...(open && { display: 'none' }) }}
             >
-              <Menu fontSize="large" />
+              <Menu />
             </IconButton>
           </Box>
           <Typography
             sx={{
-              fontFamily: 'WigglyCurves'
+              fontFamily: 'TheFountainOfWishes'
             }}
-            variant="h4"
+            variant="h3"
             noWrap
             component="div"
             alignContent="center"
@@ -140,11 +140,11 @@ const NavDrawer = () => {
       <Drawer variant="permanent" anchor="left" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRight fontSize="large" /> : <ChevronLeft fontSize="large" />}
+            {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
+        <List sx={{ padding: 0 }}>
           {drawerOptions.map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton

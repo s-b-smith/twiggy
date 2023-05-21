@@ -1,6 +1,6 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import NavDrawer from './components/NavDrawer';
-import theme from './index';
+import theme from './theme';
 
 const App = () => {
   return (
