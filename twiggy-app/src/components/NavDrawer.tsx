@@ -18,13 +18,13 @@ import {
   styled,
   useTheme
 } from '@mui/material';
-import { useState } from 'react';
 
 const drawerOptions = ['Body', 'Clothes', 'Color', 'Background'];
-const drawerWidth = 240;
+export const drawerOpenWidth = 240;
+export const drawerClosedWidth = (theme: Theme) => `calc(${theme.spacing(7)} + 1px)`;
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
+  width: drawerOpenWidth,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen
@@ -32,17 +32,20 @@ const openedMixin = (theme: Theme): CSSObject => ({
   overflowX: 'hidden'
 });
 
-const closedMixin = (theme: Theme): CSSObject => ({
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen
-  }),
-  overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`
-  }
-});
+const closedMixin = (theme: Theme): CSSObject => {
+  console.log(drawerClosedWidth(theme));
+  return {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    overflowX: 'hidden',
+    width: drawerClosedWidth(theme),
+    [theme.breakpoints.up('sm')]: {
+      width: `calc(${theme.spacing(8)} + 1px)`
+    }
+  };
+};
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -54,7 +57,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })(({ theme, open }) => ({
-  width: drawerWidth,
+  width: drawerOpenWidth,
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',
@@ -81,8 +84,8 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen
   }),
   ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerOpenWidth,
+    width: `calc(100% - ${drawerOpenWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
@@ -90,9 +93,12 @@ const AppBar = styled(MuiAppBar, {
   })
 }));
 
-const NavDrawer = () => {
+type NavDrawerProps = {
+  isNavDrawerOpen: boolean;
+  setNavDrawerOpen: (isOpen: boolean) => void;
+};
+const NavDrawer = ({ isNavDrawerOpen: open, setNavDrawerOpen: setOpen }: NavDrawerProps) => {
   const theme = useTheme();
-  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
