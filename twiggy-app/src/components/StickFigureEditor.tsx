@@ -1,8 +1,15 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import { CarouselProps } from 'react-material-ui-carousel/dist/components/types';
 import Canvas from './Canvas';
-import { drawCircleHead, drawOvalHorizontalHead, drawOvalVerticalHead } from '../shapes/heads';
+import {
+  drawCircleHead,
+  drawOvalHorizontalHead,
+  drawOvalVerticalHead,
+  drawSquareHead
+} from '../shapes/heads';
+import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../shapes/torsos';
+import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../shapes/legs';
 
 interface StickFigureCarouselProps extends CarouselProps {
   isNavDrawerOpen: boolean;
@@ -32,7 +39,7 @@ const StickFigureEditor = ({ isNavDrawerOpen }: StickFigureProps) => {
         textAlign: 'center',
         alignItems: 'center',
         ml: isNavDrawerOpen ? '240px' : '65px',
-        mt: '69px',
+        mt: '80px',
         maxWidth: `calc(100% - '65px'})`
       }}
     >
@@ -40,12 +47,17 @@ const StickFigureEditor = ({ isNavDrawerOpen }: StickFigureProps) => {
         <Canvas draw={drawCircleHead} />
         <Canvas draw={drawOvalVerticalHead} />
         <Canvas draw={drawOvalHorizontalHead} />
+        <Canvas draw={drawSquareHead} />
       </StickFigureCarousel>
       <StickFigureCarousel isNavDrawerOpen={isNavDrawerOpen}>
-        <Typography lineHeight="200px">Test text</Typography>
+        <Canvas draw={drawStickTorso} />
+        <Canvas draw={drawOvalTorso} />
+        <Canvas draw={drawCircleTorso} />
       </StickFigureCarousel>
       <StickFigureCarousel isNavDrawerOpen={isNavDrawerOpen}>
-        <Typography lineHeight="200px">Test text</Typography>
+        <Canvas draw={drawStickLegs} />
+        <Canvas draw={drawRoundLegs} />
+        <Canvas draw={drawRoundSkinnyLegs} />
       </StickFigureCarousel>
     </Box>
   );

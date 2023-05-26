@@ -1,4 +1,12 @@
-import { Checkroom, ChevronLeft, ChevronRight, EmojiEmotions, Menu, Palette, Wallpaper } from '@mui/icons-material';
+import {
+  Checkroom,
+  ChevronLeft,
+  ChevronRight,
+  EmojiEmotions,
+  Menu,
+  Palette,
+  Wallpaper
+} from '@mui/icons-material';
 import {
   Box,
   CSSObject,
@@ -56,20 +64,22 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   ...theme.mixins.toolbar
 }));
 
-const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })(({ theme, open }) => ({
-  width: drawerOpenWidth,
-  flexShrink: 0,
-  whiteSpace: 'nowrap',
-  boxSizing: 'border-box',
-  ...(open && {
-    ...openedMixin(theme),
-    '& .MuiDrawer-paper': openedMixin(theme)
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    '& .MuiDrawer-paper': closedMixin(theme)
+const Drawer = styled(MuiDrawer, { shouldForwardProp: prop => prop !== 'open' })(
+  ({ theme, open }) => ({
+    width: drawerOpenWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme)
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme)
+    })
   })
-}));
+);
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
