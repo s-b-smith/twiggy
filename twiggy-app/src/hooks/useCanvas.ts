@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import { CanvasProps } from '../components/Canvas';
+import { CanvasProps, DrawProps } from '../components/Canvas';
 
 const useCanvas = (draw: CanvasProps['draw']) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -12,7 +12,7 @@ const useCanvas = (draw: CanvasProps['draw']) => {
     const render = (ctx: CanvasRenderingContext2D) => {
       ctx.save();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      draw(ctx, counter);
+      draw({ ctx, counter } as DrawProps);
       ctx.restore();
       counter++;
       requestAnimationId = requestAnimationFrame(() => render(ctx));

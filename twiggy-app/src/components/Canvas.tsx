@@ -1,14 +1,24 @@
+import { forwardRef } from 'react';
 import useCanvas from '../hooks/useCanvas';
 
+export type DrawProps = {
+  ctx: CanvasRenderingContext2D;
+  counter: number;
+};
 export type CanvasProps = {
-  draw: (ctx: CanvasRenderingContext2D, counter: number) => void;
+  draw: (drawProps: DrawProps) => void;
 };
 
+const CanvasWrapper = forwardRef<HTMLCanvasElement>(function create(props, ref) {
+  const canvasElement = (<canvas style={{ height: '100%' }} />) as unknown as HTMLCanvasElement;
+
+  return <canvas style={{ height: '100%' }} height={canvasElement.offsetHeight} ref={ref} />;
+});
 const Canvas = (props: CanvasProps) => {
-  const { draw, ...rest } = props;
+  const { draw } = props;
   const canvasRef = useCanvas(draw);
 
-  return <canvas ref={canvasRef} {...rest} />;
+  return <CanvasWrapper ref={canvasRef} />;
 };
 
 export default Canvas;

@@ -1,64 +1,52 @@
-import { Box, Button, Paper } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
+import { CarouselProps } from 'react-material-ui-carousel/dist/components/types';
+import Canvas from './Canvas';
+import { drawCircleHead, drawOvalHorizontalHead, drawOvalVerticalHead } from '../shapes/heads';
 
-type ItemProps = {
-  key: number;
-  item: {
-    name: string;
-    description: string;
-  };
-};
-const Item = (props: ItemProps) => {
-  return (
-    <Paper>
-      <h2>{props.item.name}</h2>
-      <p>{props.item.description}</p>
-
-      <Button className="CheckButton">Check it out!</Button>
-    </Paper>
-  );
-};
+interface StickFigureCarouselProps extends CarouselProps {
+  isNavDrawerOpen: boolean;
+}
+const StickFigureCarousel = (props: StickFigureCarouselProps) => (
+  <Carousel
+    autoPlay={false}
+    navButtonsAlwaysVisible={true}
+    animation="slide"
+    duration={500}
+    indicators={false}
+    height="200px"
+    sx={{ width: props.isNavDrawerOpen ? '100%' : '75%' }}
+    {...props}
+  />
+);
 
 type StickFigureProps = {
   isNavDrawerOpen: boolean;
 };
 const StickFigureEditor = ({ isNavDrawerOpen }: StickFigureProps) => {
-  const items = [
-    {
-      name: 'Random Name #1',
-      description: 'Probably the most random thing you have ever seen!'
-    },
-    {
-      name: 'Random Name #2',
-      description: 'Hello World!'
-    }
-  ];
-
   return (
     <Box
       sx={{
         display: 'flex',
         flexDirection: 'column',
+        textAlign: 'center',
+        alignItems: 'center',
         ml: isNavDrawerOpen ? '240px' : '65px',
         mt: '69px',
-        maxWidth: `calc(100% - ${isNavDrawerOpen ? '240px' : '65px'})`
+        maxWidth: `calc(100% - '65px'})`
       }}
     >
-      <Carousel>
-        {items.map((item, i) => (
-          <Item key={i} item={item} />
-        ))}
-      </Carousel>
-      <Carousel>
-        {items.map((item, i) => (
-          <Item key={i} item={item} />
-        ))}
-      </Carousel>
-      <Carousel>
-        {items.map((item, i) => (
-          <Item key={i} item={item} />
-        ))}
-      </Carousel>
+      <StickFigureCarousel isNavDrawerOpen={isNavDrawerOpen}>
+        <Canvas draw={drawCircleHead} />
+        <Canvas draw={drawOvalVerticalHead} />
+        <Canvas draw={drawOvalHorizontalHead} />
+      </StickFigureCarousel>
+      <StickFigureCarousel isNavDrawerOpen={isNavDrawerOpen}>
+        <Typography lineHeight="200px">Test text</Typography>
+      </StickFigureCarousel>
+      <StickFigureCarousel isNavDrawerOpen={isNavDrawerOpen}>
+        <Typography lineHeight="200px">Test text</Typography>
+      </StickFigureCarousel>
     </Box>
   );
 };

@@ -26,6 +26,9 @@
           "version": "detect"
         }
     },
+    "globals": {
+        "React": true
+    },
     "rules": {
         "prettier/prettier": ["error"],
         "react/jsx-filename-extension": "off",
