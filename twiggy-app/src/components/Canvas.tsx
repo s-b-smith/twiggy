@@ -7,6 +7,7 @@ export type DrawProps = {
 };
 export type CanvasProps = {
   draw: (drawProps: DrawProps) => void;
+  isAnimated?: boolean;
 };
 
 const CanvasWrapper = forwardRef<HTMLCanvasElement>(function create(props, ref) {
@@ -15,8 +16,7 @@ const CanvasWrapper = forwardRef<HTMLCanvasElement>(function create(props, ref) 
   return <canvas style={{ height: '100%' }} height={canvasElement.offsetHeight} ref={ref} />;
 });
 const Canvas = (props: CanvasProps) => {
-  const { draw } = props;
-  const canvasRef = useCanvas(draw);
+  const canvasRef = useCanvas(props);
 
   return <CanvasWrapper ref={canvasRef} />;
 };

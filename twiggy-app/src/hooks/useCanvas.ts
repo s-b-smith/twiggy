@@ -1,34 +1,43 @@
 import { useRef, useEffect } from 'react';
 import { CanvasProps, DrawProps } from '../components/Canvas';
 
-const useCanvas = (draw: CanvasProps['draw']) => {
+const useCanvas = (props: CanvasProps) => {
+  const { draw, isAnimated } = props;
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current as HTMLCanvasElement;
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-    // Get the DPR and size of the canvas
-    // const dpr = window.devicePixelRatio;
-    // const rect = canvas.getBoundingClientRect();
-
-    // // Set the "actual" size of the canvas
-    // canvas.width = rect.width * dpr;
-    // canvas.height = rect.height * dpr;
-
-    // // Set the "drawn" size of the canvas
-    // canvas.style.width = `${rect.width}px`;
-    // canvas.style.height = `${rect.height}px`;
-
     let requestAnimationId = 0;
     let counter = 0;
     const render = (ctx: CanvasRenderingContext2D) => {
+      const dpr = window.devicePixelRatio;
+      const rect = canvas.getBoundingClientRect();
+
+      // Don't draw out-of-sight carousel items
+      if (rect.width > 0) {
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+      }
+
+      // Needed since my system is set to "make everything bigger" by 175%
+      const displayOffset = 4 / 7;
+      ctx.scale(dpr * displayOffset, dpr * displayOffset);
+      // Don't draw out-of-sight carousel items
+      if (rect.width > 0) {
+        canvas.style.width = `${rect.width}px`;
+        canvas.style.height = `${rect.height}px`;
+      }
+
       ctx.save();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       draw({ ctx, counter } as DrawProps);
       ctx.restore();
       counter++;
-      requestAnimationId = requestAnimationFrame(() => render(ctx));
+      if (isAnimated) {
+        requestAnimationId = requestAnimationFrame(() => render(ctx));
+      }
     };
     render(context);
 

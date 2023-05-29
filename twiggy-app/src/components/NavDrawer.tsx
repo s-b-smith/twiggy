@@ -40,20 +40,17 @@ const openedMixin = (theme: Theme): CSSObject => ({
   overflowX: 'hidden'
 });
 
-const closedMixin = (theme: Theme): CSSObject => {
-  console.log(drawerClosedWidth(theme));
-  return {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    overflowX: 'hidden',
-    width: drawerClosedWidth(theme),
-    [theme.breakpoints.up('sm')]: {
-      width: `calc(${theme.spacing(8)} + 1px)`
-    }
-  };
-};
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen
+  }),
+  overflowX: 'hidden',
+  width: drawerClosedWidth(theme),
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`
+  }
+});
 
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',

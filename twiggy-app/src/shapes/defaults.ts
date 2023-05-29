@@ -1,4 +1,4 @@
-const lineWidth = 10;
+const lineWidth = 20;
 const offset = lineWidth / 2;
 
 export const defaults = {

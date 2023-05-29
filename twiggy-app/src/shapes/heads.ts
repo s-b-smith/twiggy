@@ -6,7 +6,7 @@ export const drawCircleHead = (props: DrawProps) => {
 
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
-  const radius = ctx.canvas.width / 4 - defaults.lineWidth / 2;
+  const radius = ctx.canvas.height / 2 - defaults.offset;
   ctx.beginPath();
   ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
   ctx.stroke();
@@ -17,10 +17,10 @@ export const drawOvalVerticalHead = (props: DrawProps) => {
 
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
-  const radiusX = 55;
-  const radiuxY = 70;
+  const radiusY = ctx.canvas.height / 2 - defaults.offset;
+  const radiusX = radiusY * (2 / 3);
   ctx.beginPath();
-  ctx.ellipse(centerX, centerY, radiusX, radiuxY, 0, 0, 2 * Math.PI, false);
+  ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI, false);
   ctx.stroke();
 };
 
@@ -29,17 +29,18 @@ export const drawOvalHorizontalHead = (props: DrawProps) => {
 
   const centerX = ctx.canvas.width / 2;
   const centerY = ctx.canvas.height / 2;
-  const radiusX = 70;
-  const radiuxY = 55;
+  const radiusX = ctx.canvas.height * (2 / 3) - defaults.offset;
+  const radiusY = ctx.canvas.height / 2 - defaults.offset;
   ctx.beginPath();
-  ctx.ellipse(centerX, centerY, radiusX, radiuxY, 0, 0, 2 * Math.PI, false);
+  ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, 2 * Math.PI, false);
   ctx.stroke();
 };
 
 export const drawSquareHead = (props: DrawProps) => {
   const ctx = setDefaultProps(props.ctx);
 
-  const topLeftX = ctx.canvas.width / 4 + 5; // No idea why I need +5
-  const topLeftY = 5;
-  ctx.strokeRect(topLeftX, topLeftY, 140, 140);
+  const topLeftX = ctx.canvas.width / 4 + defaults.offset;
+  const topLeftY = defaults.offset;
+  const sideLength = ctx.canvas.height - defaults.offset;
+  ctx.strokeRect(topLeftX, topLeftY, sideLength, sideLength - defaults.offset);
 };
