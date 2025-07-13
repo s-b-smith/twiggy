@@ -22,6 +22,7 @@ import {
   Drawer as MuiDrawer,
   Theme,
   Toolbar,
+  Tooltip,
   Typography,
   styled,
   useTheme
@@ -113,13 +114,29 @@ const NavDrawer = ({ isNavDrawerOpen: open, setNavDrawerOpen: setOpen }: NavDraw
   const getNavIcon = (index: number) => {
     switch (index) {
       case 0:
-        return <EmojiEmotions />;
+        return (
+          <Tooltip title="Body" arrow placement="right">
+            <EmojiEmotions />
+          </Tooltip>
+        );
       case 1:
-        return <Checkroom />;
+        return (
+          <Tooltip title="Clothes" arrow placement="right">
+            <Checkroom />
+          </Tooltip>
+        );
       case 2:
-        return <Palette />;
+        return (
+          <Tooltip title="Color" arrow placement="right">
+            <Palette />
+          </Tooltip>
+        );
       case 3:
-        return <Wallpaper />;
+        return (
+          <Tooltip title="Background" arrow placement="right">
+            <Wallpaper />
+          </Tooltip>
+        );
     }
   };
 
@@ -127,7 +144,7 @@ const NavDrawer = ({ isNavDrawerOpen: open, setNavDrawerOpen: setOpen }: NavDraw
     <Box sx={{ display: 'flex' }}>
       <AppBar position="fixed" open={open}>
         <Toolbar sx={{ justifyContent: 'center' }}>
-          <Box position="absolute" top={3} left={3}>
+          <Box position="absolute" top="0.5em" left="0.4em">
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -145,6 +162,7 @@ const NavDrawer = ({ isNavDrawerOpen: open, setNavDrawerOpen: setOpen }: NavDraw
             noWrap
             component="div"
             alignContent="center"
+            justifyContent="center"
           >
             Twiggy
           </Typography>
