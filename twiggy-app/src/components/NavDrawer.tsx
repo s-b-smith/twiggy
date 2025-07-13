@@ -112,28 +112,30 @@ const NavDrawer = ({ isNavDrawerOpen: open, setNavDrawerOpen: setOpen }: NavDraw
   const handleDrawerClose = () => setOpen(false);
 
   const getNavIcon = (index: number) => {
+    const tooltipText = drawerOptions[index];
+
     switch (index) {
       case 0:
         return (
-          <Tooltip title="Body" arrow placement="right">
+          <Tooltip title={tooltipText} arrow placement="right">
             <EmojiEmotions />
           </Tooltip>
         );
       case 1:
         return (
-          <Tooltip title="Clothes" arrow placement="right">
+          <Tooltip title={tooltipText} arrow placement="right">
             <Checkroom />
           </Tooltip>
         );
       case 2:
         return (
-          <Tooltip title="Color" arrow placement="right">
+          <Tooltip title={tooltipText} arrow placement="right">
             <Palette />
           </Tooltip>
         );
       case 3:
         return (
-          <Tooltip title="Background" arrow placement="right">
+          <Tooltip title={tooltipText} arrow placement="right">
             <Wallpaper />
           </Tooltip>
         );
