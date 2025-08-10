@@ -10,6 +10,7 @@ import {
 } from '../shapes/heads';
 import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../shapes/torsos';
 import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../shapes/legs';
+import { useAppSelector } from 'hooks/react-redux-hooks';
 
 interface StickFigureCarouselProps extends CarouselProps {
   isNavDrawerOpen: boolean;
@@ -27,10 +28,12 @@ const StickFigureCarousel = (props: StickFigureCarouselProps) => (
   />
 );
 
-type StickFigureProps = {
-  isNavDrawerOpen: boolean;
-};
-const StickFigureEditor = ({ isNavDrawerOpen }: StickFigureProps) => {
+// type StickFigureProps = {
+//   isNavDrawerOpen: boolean;
+// };
+const StickFigureEditor = () => {
+  const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
+
   return (
     <Box
       sx={{

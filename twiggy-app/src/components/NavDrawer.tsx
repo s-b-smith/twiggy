@@ -27,6 +27,9 @@ import {
   styled,
   useTheme
 } from '@mui/material';
+import { useAppDispatch, useAppSelector } from 'hooks/react-redux-hooks';
+import { useState } from 'react';
+import { setIsOpen } from 'store/navBarSlice';
 
 const drawerOptions = ['Body', 'Clothes', 'Color', 'Background'];
 export const drawerOpenWidth = 240;
@@ -101,15 +104,19 @@ const AppBar = styled(MuiAppBar, {
   })
 }));
 
-type NavDrawerProps = {
-  isNavDrawerOpen: boolean;
-  setNavDrawerOpen: (isOpen: boolean) => void;
-};
-const NavDrawer = ({ isNavDrawerOpen: open, setNavDrawerOpen: setOpen }: NavDrawerProps) => {
+const NavDrawer = () => {
   const theme = useTheme();
+  const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(0);
+  const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
+  const dispatch = useAppDispatch();
 
-  const handleDrawerOpen = () => setOpen(true);
-  const handleDrawerClose = () => setOpen(false);
+  const handleDrawerOpen = () => {
+    dispatch(setIsOpen(true));
+  };
+  const handleDrawerClose = () => {
+    dispatch(setIsOpen(false));
+  };
+  const handleMenuItemClick = (index: number) => setSelectedMenuItemIndex(index);
 
   const getNavIcon = (index: number) => {
     const tooltipText = drawerOptions[index];
@@ -144,14 +151,14 @@ const NavDrawer = ({ isNavDrawerOpen: open, setNavDrawerOpen: setOpen }: NavDraw
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={isNavDrawerOpen}>
         <Toolbar sx={{ justifyContent: 'center' }}>
           <Box position="absolute" top="0.5em" left="0.4em">
             <IconButton
               color="inherit"
               aria-label="open drawer"
               onClick={handleDrawerOpen}
-              sx={{ mr: 5, ...(open && { display: 'none' }) }}
+              sx={{ mr: 5, ...(isNavDrawerOpen && { display: 'none' }) }}
             >
               <Menu />
             </IconButton>
@@ -170,7 +177,7 @@ const NavDrawer = ({ isNavDrawerOpen: open, setNavDrawerOpen: setOpen }: NavDraw
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" anchor="left" open={open}>
+      <Drawer variant="permanent" anchor="left" open={isNavDrawerOpen}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
@@ -181,22 +188,25 @@ const NavDrawer = ({ isNavDrawerOpen: open, setNavDrawerOpen: setOpen }: NavDraw
           {drawerOptions.map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
+                id={`menu-item-${index}`}
                 sx={{
                   minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
+                  justifyContent: isNavDrawerOpen ? 'initial' : 'center',
                   px: 2.5
                 }}
+                selected={index === selectedMenuItemIndex}
+                onClick={() => handleMenuItemClick(index)}
               >
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
-                    mr: open ? 3 : 'auto',
+                    mr: isNavDrawerOpen ? 3 : 'auto',
                     justifyContent: 'center'
                   }}
                 >
                   {getNavIcon(index)}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={text} sx={{ opacity: isNavDrawerOpen ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
