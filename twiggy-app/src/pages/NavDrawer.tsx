@@ -28,7 +28,7 @@ import {
   useTheme
 } from '@mui/material';
 import { useAppDispatch, useAppSelector } from 'hooks/react-redux-hooks';
-import { useState } from 'react';
+import { Link, useLocation } from 'react-router';
 import { setIsOpen } from 'store/navBarSlice';
 
 const drawerOptions = ['Body', 'Clothes', 'Color', 'Background'];
@@ -106,9 +106,10 @@ const AppBar = styled(MuiAppBar, {
 
 const NavDrawer = () => {
   const theme = useTheme();
-  const [selectedMenuItemIndex, setSelectedMenuItemIndex] = useState(0);
   const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const handleDrawerOpen = () => {
     dispatch(setIsOpen(true));
@@ -116,8 +117,35 @@ const NavDrawer = () => {
   const handleDrawerClose = () => {
     dispatch(setIsOpen(false));
   };
-  const handleMenuItemClick = (index: number) => setSelectedMenuItemIndex(index);
 
+  const getNavLink = (index: number): string => {
+    switch (index) {
+      case 0:
+        return '/body';
+      case 1:
+        return '/clothes';
+      case 2:
+        return '/color';
+      case 3:
+        return '/background';
+      default:
+        return '/';
+    }
+  };
+  const isNavButtonSelected = (index: number) => {
+    switch (currentPath) {
+      case '/body':
+        return index === 0;
+      case '/clothes':
+        return index === 1;
+      case '/color':
+        return index === 2;
+      case '/background':
+        return index === 3;
+      default:
+        return false;
+    }
+  };
   const getNavIcon = (index: number) => {
     const tooltipText = drawerOptions[index];
 
@@ -187,27 +215,28 @@ const NavDrawer = () => {
         <List sx={{ padding: 0 }}>
           {drawerOptions.map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                id={`menu-item-${index}`}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: isNavDrawerOpen ? 'initial' : 'center',
-                  px: 2.5
-                }}
-                selected={index === selectedMenuItemIndex}
-                onClick={() => handleMenuItemClick(index)}
-              >
-                <ListItemIcon
+              <Link to={getNavLink(index)} style={{ textDecoration: 'none' }}>
+                <ListItemButton
+                  id={`menu-item-${index}`}
                   sx={{
-                    minWidth: 0,
-                    mr: isNavDrawerOpen ? 3 : 'auto',
-                    justifyContent: 'center'
+                    minHeight: 48,
+                    justifyContent: isNavDrawerOpen ? 'initial' : 'center',
+                    px: 2.5
                   }}
+                  selected={isNavButtonSelected(index)}
                 >
-                  {getNavIcon(index)}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: isNavDrawerOpen ? 1 : 0 }} />
-              </ListItemButton>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: isNavDrawerOpen ? 3 : 'auto',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    {getNavIcon(index)}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: isNavDrawerOpen ? 1 : 0 }} />
+                </ListItemButton>
+              </Link>
             </ListItem>
           ))}
         </List>
