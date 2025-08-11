@@ -3,11 +3,14 @@ import { CarouselProps } from 'react-material-ui-carousel/dist/components/types'
 
 interface TwiggyCarouselProps extends CarouselProps {
   isNavDrawerOpen: boolean;
+  isEnabled?: boolean;
 }
 const TwiggyCarousel = (props: TwiggyCarouselProps) => (
   <Carousel
     autoPlay={false}
-    navButtonsAlwaysVisible={true}
+    navButtonsAlwaysVisible={props.isEnabled ?? true}
+    navButtonsAlwaysInvisible={!props.isEnabled}
+    swipe={props.isEnabled ?? true}
     animation="slide"
     duration={500}
     indicators={false}

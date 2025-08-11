@@ -27,8 +27,10 @@ import {
   styled,
   useTheme
 } from '@mui/material';
+import { AppPaths } from 'App';
+import { useGetActiveEditor } from 'hooks/active-editor-hooks';
 import { useAppDispatch, useAppSelector } from 'hooks/react-redux-hooks';
-import { Link, useLocation } from 'react-router';
+import { Link } from 'react-router';
 import { setIsOpen } from 'store/navBarSlice';
 
 const drawerOptions = ['Body', 'Clothes', 'Color', 'Background'];
@@ -108,8 +110,7 @@ const NavDrawer = () => {
   const theme = useTheme();
   const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const currentPath = location.pathname;
+  const activeEditor = useGetActiveEditor();
 
   const handleDrawerOpen = () => {
     dispatch(setIsOpen(true));
@@ -121,29 +122,15 @@ const NavDrawer = () => {
   const getNavLink = (index: number): string => {
     switch (index) {
       case 0:
-        return '/body';
+        return AppPaths.Body;
       case 1:
-        return '/clothes';
+        return AppPaths.Clothes;
       case 2:
-        return '/color';
+        return AppPaths.Color;
       case 3:
-        return '/background';
+        return AppPaths.Background;
       default:
-        return '/';
-    }
-  };
-  const isNavButtonSelected = (index: number) => {
-    switch (currentPath) {
-      case '/body':
-        return index === 0;
-      case '/clothes':
-        return index === 1;
-      case '/color':
-        return index === 2;
-      case '/background':
-        return index === 3;
-      default:
-        return false;
+        return AppPaths.Home;
     }
   };
   const getNavIcon = (index: number) => {
@@ -223,7 +210,7 @@ const NavDrawer = () => {
                     justifyContent: isNavDrawerOpen ? 'initial' : 'center',
                     px: 2.5
                   }}
-                  selected={isNavButtonSelected(index)}
+                  selected={index === activeEditor}
                 >
                   <ListItemIcon
                     sx={{
