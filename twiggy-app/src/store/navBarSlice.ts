@@ -5,7 +5,7 @@ interface NavBarState {
 }
 
 const initialState: NavBarState = {
-  isOpen: true
+  isOpen: false
 };
 
 const navBarSlice = createSlice({
