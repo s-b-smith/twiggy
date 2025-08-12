@@ -28,7 +28,7 @@ import {
   useTheme
 } from '@mui/material';
 import { AppPaths } from 'App';
-import { useGetActiveEditor } from 'hooks/active-editor-hooks';
+import { useGetActiveEditor } from 'hooks/activeEditorHooks';
 import { useAppDispatch, useAppSelector } from 'hooks/react-redux-hooks';
 import { Link } from 'react-router';
 import { setIsOpen } from 'store/navBarSlice';

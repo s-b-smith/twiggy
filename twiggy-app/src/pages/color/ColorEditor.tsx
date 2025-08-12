@@ -9,7 +9,7 @@ import {
 import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../../shapes/torsos';
 import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../../shapes/legs';
 import { useAppSelector } from 'hooks/react-redux-hooks';
-import { Editors, useIsEditorActive } from 'hooks/active-editor-hooks';
+import { Editors, useIsEditorActive } from 'hooks/activeEditorHooks';
 import { useEffect } from 'react';
 
 const ColorEditor = () => {
