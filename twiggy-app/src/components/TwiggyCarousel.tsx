@@ -1,11 +1,12 @@
+import { useAppSelector } from 'hooks/react-redux-hooks';
 import Carousel from 'react-material-ui-carousel';
 import { CarouselProps } from 'react-material-ui-carousel/dist/components/types';
 
 interface TwiggyCarouselProps extends CarouselProps {
-  isNavDrawerOpen: boolean;
   isEnabled?: boolean;
 }
 const TwiggyCarousel = (props: TwiggyCarouselProps) => {
+  const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
   const isEnabled = props.isEnabled === undefined || props.isEnabled;
 
   return (
@@ -18,6 +19,15 @@ const TwiggyCarousel = (props: TwiggyCarouselProps) => {
       duration={500}
       indicators={false}
       height="200px"
+      sx={{
+        marginLeft: isNavDrawerOpen ? '-87.5px' : '0px',
+        width: `calc(100% + ${isNavDrawerOpen ? '175px' : '0%'})`
+      }}
+      navButtonsWrapperProps={{
+        style: {
+          margin: isNavDrawerOpen ? 'auto 87.5px' : 'auto'
+        }
+      }}
       {...props}
     />
   );

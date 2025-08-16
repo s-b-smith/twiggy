@@ -10,15 +10,20 @@ import {
   drawOvalVerticalHead,
   drawSquareHead
 } from '../../shapes/heads';
-import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../../shapes/torsos';
+import {
+  drawCircleTorso,
+  drawColorCircleTorso,
+  drawColorOvalTorso,
+  drawColorStickTorso,
+  drawOvalTorso,
+  drawStickTorso
+} from '../../shapes/torsos';
 import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../../shapes/legs';
-import { useAppSelector } from 'hooks/react-redux-hooks';
 import { Editors, useIsEditorActive } from 'hooks/activeEditorHooks';
 import '../../styles/overlay.css';
 import { useState } from 'react';
 
 const ClothesEditor = () => {
-  const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
   const isEditorActive = useIsEditorActive(Editors.Clothes);
   const [selectedHead, setSelectedHead] = useState(0);
   const [selectedBody, setSelectedBody] = useState(0);
@@ -31,9 +36,9 @@ const ClothesEditor = () => {
     <Canvas key={'drawSquareHead2'} draw={drawColorSquareHead} />
   ];
   const bodyCanvases = [
-    <Canvas key={'drawStickTorso2'} draw={drawStickTorso} />,
-    <Canvas key={'drawOvalTorso2'} draw={drawOvalTorso} />,
-    <Canvas key={'drawCircleTorso2'} draw={drawCircleTorso} />
+    <Canvas key={'drawStickTorso2'} draw={drawColorStickTorso} />,
+    <Canvas key={'drawOvalTorso2'} draw={drawColorOvalTorso} />,
+    <Canvas key={'drawCircleTorso2'} draw={drawColorCircleTorso} />
   ];
   const legsCanvases = [
     <Canvas key={'drawStickLegs2'} draw={drawStickLegs} />,
@@ -45,22 +50,13 @@ const ClothesEditor = () => {
   return (
     <div className="overlay-component" style={{ zIndex: 2 }}>
       <div style={{ visibility: isEditorActive ? 'visible' : 'hidden' }}>
-        <TwiggyCarousel
-          isNavDrawerOpen={isNavDrawerOpen}
-          onChange={(now?: number) => setSelectedHead(now ?? 0)}
-        >
+        <TwiggyCarousel onChange={(now?: number) => setSelectedHead(now ?? 0)}>
           {headCanvases}
         </TwiggyCarousel>
-        <TwiggyCarousel
-          isNavDrawerOpen={isNavDrawerOpen}
-          onChange={(now?: number) => setSelectedBody(now ?? 0)}
-        >
+        <TwiggyCarousel onChange={(now?: number) => setSelectedBody(now ?? 0)}>
           {bodyCanvases}
         </TwiggyCarousel>
-        <TwiggyCarousel
-          isNavDrawerOpen={isNavDrawerOpen}
-          onChange={(now?: number) => setSelectedLegs(now ?? 0)}
-        >
+        <TwiggyCarousel onChange={(now?: number) => setSelectedLegs(now ?? 0)}>
           {legsCanvases}
         </TwiggyCarousel>
       </div>

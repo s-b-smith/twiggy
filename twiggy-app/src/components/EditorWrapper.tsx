@@ -14,7 +14,8 @@ const EditorWrapper = () => {
         alignItems: 'center',
         ml: isNavDrawerOpen ? '240px' : '65px',
         mt: '80px',
-        maxWidth: `calc(100% - '65px'})`
+        maxWidth: `calc(100% - '65px'})`,
+        overflowX: 'clip'
       }}
     >
       <Outlet />
