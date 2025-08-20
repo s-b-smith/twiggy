@@ -1,16 +1,26 @@
-import Canvas from 'components/Canvas';
+import Canvas, { CanvasProps } from 'components/Canvas';
 import TwiggyCarousel from 'components/TwiggyCarousel';
 import {
   drawCircleHead,
   drawOvalHorizontalHead,
   drawOvalVerticalHead,
   drawSquareHead
-} from '../../shapes/heads';
-import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../../shapes/torsos';
-import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../../shapes/legs';
+} from '../../canvas/shapes/heads';
+import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../../canvas/shapes/torsos';
+import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../../canvas/shapes/legs';
 import { Editors, useIsEditorActive } from 'hooks/activeEditorHooks';
 import '../../styles/overlay.css';
 import { useState } from 'react';
+
+const BodyCanvas = (canvasProps: CanvasProps & { key: React.Key }) => {
+  const { style, ...remainingCanvasProps } = canvasProps;
+  const canvasStyle = { ...style, ...{ height: '80%' } } as React.CSSProperties;
+
+  return <Canvas style={canvasStyle} {...remainingCanvasProps} />;
+};
+const StaticCanvasWrapper = ({ children }: { children: React.ReactNode }) => {
+  return <div style={{ height: '200px' }}>{children}</div>;
+};
 
 const BodyEditor = () => {
   const isEditorActive = useIsEditorActive(Editors.Body);
@@ -19,10 +29,18 @@ const BodyEditor = () => {
   const [selectedLegs, setSelectedLegs] = useState(0);
 
   const headCanvases = [
-    <Canvas key={'drawCircleHead'} draw={drawCircleHead} />,
-    <Canvas key={'drawOvalVerticalHead'} draw={drawOvalVerticalHead} />,
-    <Canvas key={'drawOvalHorizontalHead'} draw={drawOvalHorizontalHead} />,
-    <Canvas key={'drawSquareHead'} draw={drawSquareHead} />
+    <BodyCanvas key={'drawCircleHead'} draw={drawCircleHead} style={{ marginTop: '40px' }} />,
+    <BodyCanvas
+      key={'drawOvalVerticalHead'}
+      draw={drawOvalVerticalHead}
+      style={{ marginTop: '40px' }}
+    />,
+    <BodyCanvas
+      key={'drawOvalHorizontalHead'}
+      draw={drawOvalHorizontalHead}
+      style={{ marginTop: '40px' }}
+    />,
+    <BodyCanvas key={'drawSquareHead'} draw={drawSquareHead} style={{ marginTop: '40px' }} />
   ];
   const bodyCanvases = [
     <Canvas key={'drawStickTorso'} draw={drawStickTorso} />,
@@ -30,9 +48,13 @@ const BodyEditor = () => {
     <Canvas key={'drawCircleTorso'} draw={drawCircleTorso} />
   ];
   const legsCanvases = [
-    <Canvas key={'drawStickLegs'} draw={drawStickLegs} />,
-    <Canvas key={'drawRoundLegs'} draw={drawRoundLegs} />,
-    <Canvas key={'drawRoundSkinnyLegs'} draw={drawRoundSkinnyLegs} />
+    <BodyCanvas key={'drawStickLegs'} draw={drawStickLegs} style={{ marginBottom: '40px' }} />,
+    <BodyCanvas key={'drawRoundLegs'} draw={drawRoundLegs} style={{ marginBottom: '40px' }} />,
+    <BodyCanvas
+      key={'drawRoundSkinnyLegs'}
+      draw={drawRoundSkinnyLegs}
+      style={{ marginBottom: '40px' }}
+    />
   ];
 
   return (
@@ -54,9 +76,9 @@ const BodyEditor = () => {
           visibility: isEditorActive ? 'hidden' : 'visible'
         }}
       >
-        <div style={{ height: '200px' }}>{headCanvases[selectedHead]}</div>
-        <div style={{ height: '200px' }}>{bodyCanvases[selectedBody]}</div>
-        <div style={{ height: '200px' }}>{legsCanvases[selectedLegs]}</div>
+        <StaticCanvasWrapper>{headCanvases[selectedHead]}</StaticCanvasWrapper>
+        <StaticCanvasWrapper>{bodyCanvases[selectedBody]}</StaticCanvasWrapper>
+        <StaticCanvasWrapper>{legsCanvases[selectedLegs]}</StaticCanvasWrapper>
       </div>
     </div>
   );

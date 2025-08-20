@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import { CanvasProps, DrawProps } from '../components/Canvas';
 
 const useCanvas = (props: CanvasProps) => {
-  const { draw, isAnimated } = props;
+  const { draw, isAnimated, image } = props;
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const useCanvas = (props: CanvasProps) => {
 
       ctx.save();
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      draw({ ctx, counter } as DrawProps);
+      draw({ ctx, counter, image } as DrawProps);
       ctx.restore();
       counter++;
       if (isAnimated) {

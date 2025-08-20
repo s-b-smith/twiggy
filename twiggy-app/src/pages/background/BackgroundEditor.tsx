@@ -5,9 +5,9 @@ import {
   drawOvalHorizontalHead,
   drawOvalVerticalHead,
   drawSquareHead
-} from '../../shapes/heads';
-import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../../shapes/torsos';
-import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../../shapes/legs';
+} from '../../canvas/shapes/heads';
+import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../../canvas/shapes/torsos';
+import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../../canvas/shapes/legs';
 import { useAppSelector } from 'hooks/react-redux-hooks';
 import { Editors, useIsEditorActive } from 'hooks/activeEditorHooks';
 import { useEffect } from 'react';
