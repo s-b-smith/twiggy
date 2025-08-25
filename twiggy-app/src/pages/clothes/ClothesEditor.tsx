@@ -5,6 +5,7 @@ import '../../styles/overlay.css';
 import { useState } from 'react';
 import { drawImage } from 'canvas/clothes/clothes';
 import { useClothesImages } from 'hooks/imageHooks';
+import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
 
 const ClothesEditor = () => {
   const clothesImages = useClothesImages();
@@ -21,7 +22,12 @@ const ClothesEditor = () => {
     <></>,
     ...Object.entries(clothesImages.heads).map(([key, head]) => {
       return (
-        <Canvas key={`drawHead${key}`} draw={drawImage} image={head} style={headCanvasStyles} />
+        <Canvas
+          key={`drawClothesHead${key}`}
+          draw={drawImage}
+          image={head}
+          style={headCanvasStyles}
+        />
       );
     })
   ];
@@ -30,17 +36,22 @@ const ClothesEditor = () => {
     <></>,
     ...Object.entries(clothesImages.bodies).map(([key, body]) => {
       return (
-        <Canvas key={`drawBody${key}`} draw={drawImage} image={body} style={bodyCanvasStyles} />
+        <Canvas
+          key={`drawClothesBody${key}`}
+          draw={drawImage}
+          image={body}
+          style={bodyCanvasStyles}
+        />
       );
     })
   ];
-  const legsCanvasStyles = { width: '300px', verticalAlign: 'start' } as React.CSSProperties;
+  const legsCanvasStyles = { width: '300px' };
   const legsCanvases = [
     <></>,
     ...Object.entries(clothesImages.legs).map(([key, legsImage]) => {
       return (
         <Canvas
-          key={`drawBody${key}`}
+          key={`drawClothesLegs${key}`}
           draw={drawImage}
           image={legsImage}
           style={legsCanvasStyles}
@@ -68,9 +79,9 @@ const ClothesEditor = () => {
           visibility: isEditorActive ? 'hidden' : 'visible'
         }}
       >
-        <div style={{ height: '200px' }}>{headCanvases[selectedHead]}</div>
-        <div style={{ height: '200px' }}>{bodyCanvases[selectedBody]}</div>
-        <div style={{ height: '200px' }}>{legsCanvases[selectedLegs]}</div>
+        <StaticCanvasWrapper>{headCanvases[selectedHead]}</StaticCanvasWrapper>
+        <StaticCanvasWrapper>{bodyCanvases[selectedBody]}</StaticCanvasWrapper>
+        <StaticCanvasWrapper>{legsCanvases[selectedLegs]}</StaticCanvasWrapper>
       </div>
     </div>
   );

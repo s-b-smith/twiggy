@@ -23,15 +23,13 @@ import {
 import { Editors, useIsEditorActive } from 'hooks/activeEditorHooks';
 import '../../styles/overlay.css';
 import { useState } from 'react';
+import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
 
-const BodyCanvas = (canvasProps: CanvasProps & { key: React.Key }) => {
-  const { style, ...remainingCanvasProps } = canvasProps;
-  const canvasStyle = { ...style, ...{ height: '80%' } } as React.CSSProperties;
-
-  return <Canvas style={canvasStyle} {...remainingCanvasProps} />;
+const HeadCanvas = (canvasProps: CanvasProps & { key: React.Key }) => {
+  return <Canvas style={{ height: '80%', marginTop: '40px' }} {...canvasProps} />;
 };
-const StaticCanvasWrapper = ({ children }: { children: React.ReactNode }) => {
-  return <div style={{ height: '200px' }}>{children}</div>;
+const LegsCanvas = (canvasProps: CanvasProps & { key: React.Key }) => {
+  return <Canvas style={{ height: '80%', marginBottom: '40px' }} {...canvasProps} />;
 };
 
 const BodyEditor = () => {
@@ -41,18 +39,10 @@ const BodyEditor = () => {
   const [selectedLegs, setSelectedLegs] = useState(0);
 
   const headCanvases = [
-    <BodyCanvas key={'drawCircleHead'} draw={drawCircleHead} style={{ marginTop: '40px' }} />,
-    <BodyCanvas
-      key={'drawOvalVerticalHead'}
-      draw={drawOvalVerticalHead}
-      style={{ marginTop: '40px' }}
-    />,
-    <BodyCanvas
-      key={'drawOvalHorizontalHead'}
-      draw={drawOvalHorizontalHead}
-      style={{ marginTop: '40px' }}
-    />,
-    <BodyCanvas key={'drawSquareHead'} draw={drawSquareHead} style={{ marginTop: '40px' }} />,
+    <HeadCanvas key={'drawCircleHead'} draw={drawCircleHead} />,
+    <HeadCanvas key={'drawOvalVerticalHead'} draw={drawOvalVerticalHead} />,
+    <HeadCanvas key={'drawOvalHorizontalHead'} draw={drawOvalHorizontalHead} />,
+    <HeadCanvas key={'drawSquareHead'} draw={drawSquareHead} />,
     <></>
   ];
   const bodyCanvases = [
@@ -65,18 +55,10 @@ const BodyEditor = () => {
     <></>
   ];
   const legsCanvases = [
-    <BodyCanvas key={'drawStickLegs'} draw={drawStickLegs} style={{ marginBottom: '40px' }} />,
-    <BodyCanvas key={'drawRoundLegs'} draw={drawRoundLegs} style={{ marginBottom: '40px' }} />,
-    <BodyCanvas
-      key={'drawRoundSkinnyLegs'}
-      draw={drawRoundSkinnyLegs}
-      style={{ marginBottom: '40px' }}
-    />,
-    <BodyCanvas
-      key={'drawOneMiddleLeg'}
-      draw={drawOneMiddleLeg}
-      style={{ marginBottom: '40px' }}
-    />,
+    <LegsCanvas key={'drawStickLegs'} draw={drawStickLegs} />,
+    <LegsCanvas key={'drawRoundLegs'} draw={drawRoundLegs} />,
+    <LegsCanvas key={'drawRoundSkinnyLegs'} draw={drawRoundSkinnyLegs} />,
+    <LegsCanvas key={'drawOneMiddleLeg'} draw={drawOneMiddleLeg} />,
     <></>
   ];
 
