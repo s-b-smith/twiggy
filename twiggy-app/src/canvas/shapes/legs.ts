@@ -108,3 +108,16 @@ export const drawRoundSkinnyLegs = (props: DrawProps) => {
   );
   ctx.stroke();
 };
+
+export const drawOneMiddleLeg = (props: DrawProps) => {
+  const ctx = setDefaultProps(props.ctx);
+
+  const legX = ctx.canvas.width / 2;
+  const startLegY = 0;
+  const endLegY = ctx.canvas.height;
+
+  ctx.beginPath();
+  ctx.moveTo(legX, startLegY);
+  ctx.lineTo(legX, endLegY);
+  ctx.stroke();
+};

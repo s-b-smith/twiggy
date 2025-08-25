@@ -6,8 +6,20 @@ import {
   drawOvalVerticalHead,
   drawSquareHead
 } from '../../canvas/shapes/heads';
-import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../../canvas/shapes/torsos';
-import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../../canvas/shapes/legs';
+import {
+  drawCircleTorso,
+  drawCircleTorsoNoArms,
+  drawOvalTorso,
+  drawOvalTorsoNoArms,
+  drawStickTorso,
+  drawTorso
+} from '../../canvas/shapes/torsos';
+import {
+  drawOneMiddleLeg,
+  drawRoundLegs,
+  drawRoundSkinnyLegs,
+  drawStickLegs
+} from '../../canvas/shapes/legs';
 import { Editors, useIsEditorActive } from 'hooks/activeEditorHooks';
 import '../../styles/overlay.css';
 import { useState } from 'react';
@@ -40,12 +52,17 @@ const BodyEditor = () => {
       draw={drawOvalHorizontalHead}
       style={{ marginTop: '40px' }}
     />,
-    <BodyCanvas key={'drawSquareHead'} draw={drawSquareHead} style={{ marginTop: '40px' }} />
+    <BodyCanvas key={'drawSquareHead'} draw={drawSquareHead} style={{ marginTop: '40px' }} />,
+    <></>
   ];
   const bodyCanvases = [
     <Canvas key={'drawStickTorso'} draw={drawStickTorso} />,
     <Canvas key={'drawOvalTorso'} draw={drawOvalTorso} />,
-    <Canvas key={'drawCircleTorso'} draw={drawCircleTorso} />
+    <Canvas key={'drawCircleTorso'} draw={drawCircleTorso} />,
+    <Canvas key={'drawTorso'} draw={drawTorso} />,
+    <Canvas key={'drawOvalTorsoNoArms'} draw={drawOvalTorsoNoArms} />,
+    <Canvas key={'drawCircleTorsoNoArms'} draw={drawCircleTorsoNoArms} />,
+    <></>
   ];
   const legsCanvases = [
     <BodyCanvas key={'drawStickLegs'} draw={drawStickLegs} style={{ marginBottom: '40px' }} />,
@@ -54,7 +71,13 @@ const BodyEditor = () => {
       key={'drawRoundSkinnyLegs'}
       draw={drawRoundSkinnyLegs}
       style={{ marginBottom: '40px' }}
-    />
+    />,
+    <BodyCanvas
+      key={'drawOneMiddleLeg'}
+      draw={drawOneMiddleLeg}
+      style={{ marginBottom: '40px' }}
+    />,
+    <></>
   ];
 
   return (
