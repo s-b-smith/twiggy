@@ -20,10 +20,13 @@ import {
   drawRoundSkinnyLegs,
   drawStickLegs
 } from '../../canvas/shapes/legs';
-import { Editors, useIsEditorActive } from 'hooks/activeEditorHooks';
+import { useIsEditorActive } from 'hooks/activeEditorHooks';
 import '../../styles/overlay.css';
-import { useState } from 'react';
+import { useMemo } from 'react';
 import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
+import React from 'react';
+import { Editor } from 'constants/app';
+import { rotateArray } from 'utils/arrayUtils';
 
 const HeadCanvas = (canvasProps: CanvasProps & { key: React.Key }) => {
   return <Canvas style={{ height: '80%', marginTop: '40px' }} {...canvasProps} />;
@@ -32,59 +35,109 @@ const LegsCanvas = (canvasProps: CanvasProps & { key: React.Key }) => {
   return <Canvas style={{ height: '80%', marginBottom: '40px' }} {...canvasProps} />;
 };
 
-const BodyEditor = () => {
-  const isEditorActive = useIsEditorActive(Editors.Body);
-  const [selectedHead, setSelectedHead] = useState(0);
-  const [selectedBody, setSelectedBody] = useState(0);
-  const [selectedLegs, setSelectedLegs] = useState(0);
+interface BodyStepsAwayFromStart {
+  head: number;
+  body: number;
+  legs: number;
+}
+const stepsAwayFromStart: BodyStepsAwayFromStart = {
+  head: 0,
+  body: 0,
+  legs: 0
+};
 
-  const headCanvases = [
-    <HeadCanvas key={'drawCircleHead'} draw={drawCircleHead} />,
-    <HeadCanvas key={'drawOvalVerticalHead'} draw={drawOvalVerticalHead} />,
-    <HeadCanvas key={'drawOvalHorizontalHead'} draw={drawOvalHorizontalHead} />,
-    <HeadCanvas key={'drawSquareHead'} draw={drawSquareHead} />,
-    <></>
-  ];
-  const bodyCanvases = [
-    <Canvas key={'drawStickTorso'} draw={drawStickTorso} />,
-    <Canvas key={'drawOvalTorso'} draw={drawOvalTorso} />,
-    <Canvas key={'drawCircleTorso'} draw={drawCircleTorso} />,
-    <Canvas key={'drawTorso'} draw={drawTorso} />,
-    <Canvas key={'drawOvalTorsoNoArms'} draw={drawOvalTorsoNoArms} />,
-    <Canvas key={'drawCircleTorsoNoArms'} draw={drawCircleTorsoNoArms} />,
-    <></>
-  ];
-  const legsCanvases = [
-    <LegsCanvas key={'drawStickLegs'} draw={drawStickLegs} />,
-    <LegsCanvas key={'drawRoundLegs'} draw={drawRoundLegs} />,
-    <LegsCanvas key={'drawRoundSkinnyLegs'} draw={drawRoundSkinnyLegs} />,
-    <LegsCanvas key={'drawOneMiddleLeg'} draw={drawOneMiddleLeg} />,
-    <></>
-  ];
+const BodyEditor = () => {
+  const isEditorActive = useIsEditorActive(Editor.Body);
+
+  const headCanvases = useMemo(() => {
+    return rotateArray(
+      [
+        <HeadCanvas key={'drawCircleHead'} draw={drawCircleHead} />,
+        <HeadCanvas key={'drawOvalVerticalHead'} draw={drawOvalVerticalHead} />,
+        <HeadCanvas key={'drawOvalHorizontalHead'} draw={drawOvalHorizontalHead} />,
+        <HeadCanvas key={'drawSquareHead'} draw={drawSquareHead} />,
+        <React.Fragment key={'drawHeadEmpty'}></React.Fragment>
+      ],
+      stepsAwayFromStart.head
+    );
+  }, [isEditorActive]); // eslint-disable-line
+  const bodyCanvases = useMemo(() => {
+    return rotateArray(
+      [
+        <Canvas key={'drawStickTorso'} draw={drawStickTorso} />,
+        <Canvas key={'drawOvalTorso'} draw={drawOvalTorso} />,
+        <Canvas key={'drawCircleTorso'} draw={drawCircleTorso} />,
+        <Canvas key={'drawTorso'} draw={drawTorso} />,
+        <Canvas key={'drawOvalTorsoNoArms'} draw={drawOvalTorsoNoArms} />,
+        <Canvas key={'drawCircleTorsoNoArms'} draw={drawCircleTorsoNoArms} />,
+        <React.Fragment key={'drawBodyEmpty'}></React.Fragment>
+      ],
+      stepsAwayFromStart.body
+    );
+  }, [isEditorActive]); // eslint-disable-line
+  const legsCanvases = useMemo(() => {
+    return rotateArray(
+      [
+        <LegsCanvas key={'drawStickLegs'} draw={drawStickLegs} />,
+        <LegsCanvas key={'drawRoundLegs'} draw={drawRoundLegs} />,
+        <LegsCanvas key={'drawRoundSkinnyLegs'} draw={drawRoundSkinnyLegs} />,
+        <LegsCanvas key={'drawOneMiddleLeg'} draw={drawOneMiddleLeg} />,
+        <React.Fragment key={'drawLegsEmpty'}></React.Fragment>
+      ],
+      stepsAwayFromStart.legs
+    );
+  }, [isEditorActive]); // eslint-disable-line
+
+  const handleChange = (
+    isNext: boolean,
+    now: number | undefined,
+    stepsAwayFromStartKey: keyof BodyStepsAwayFromStart
+  ) => {
+    if (now === undefined) {
+      return;
+    }
+
+    if (now === 0) {
+      stepsAwayFromStart[stepsAwayFromStartKey] = 0;
+    } else {
+      if (isNext) {
+        stepsAwayFromStart[stepsAwayFromStartKey]++;
+      } else {
+        stepsAwayFromStart[stepsAwayFromStartKey]--;
+      }
+    }
+  };
 
   return (
     <div className="overlay-component" style={{ zIndex: 1 }}>
-      <div style={{ visibility: isEditorActive ? 'visible' : 'hidden' }}>
-        <TwiggyCarousel onChange={(now?: number) => setSelectedHead(now ?? 0)}>
-          {headCanvases}
-        </TwiggyCarousel>
-        <TwiggyCarousel onChange={(now?: number) => setSelectedBody(now ?? 0)}>
-          {bodyCanvases}
-        </TwiggyCarousel>
-        <TwiggyCarousel onChange={(now?: number) => setSelectedLegs(now ?? 0)}>
-          {legsCanvases}
-        </TwiggyCarousel>
-      </div>
-      <div
-        className="canvas-overlay"
-        style={{
-          visibility: isEditorActive ? 'hidden' : 'visible'
-        }}
-      >
-        <StaticCanvasWrapper>{headCanvases[selectedHead]}</StaticCanvasWrapper>
-        <StaticCanvasWrapper>{bodyCanvases[selectedBody]}</StaticCanvasWrapper>
-        <StaticCanvasWrapper>{legsCanvases[selectedLegs]}</StaticCanvasWrapper>
-      </div>
+      {isEditorActive ? (
+        <div>
+          <TwiggyCarousel
+            next={(now?: number) => handleChange(true, now, 'head')}
+            prev={(now?: number) => handleChange(false, now, 'head')}
+          >
+            {headCanvases}
+          </TwiggyCarousel>
+          <TwiggyCarousel
+            next={(now?: number) => handleChange(true, now, 'body')}
+            prev={(now?: number) => handleChange(false, now, 'body')}
+          >
+            {bodyCanvases}
+          </TwiggyCarousel>
+          <TwiggyCarousel
+            next={(now?: number) => handleChange(true, now, 'legs')}
+            prev={(now?: number) => handleChange(false, now, 'legs')}
+          >
+            {legsCanvases}
+          </TwiggyCarousel>
+        </div>
+      ) : (
+        <div className="canvas-overlay">
+          <StaticCanvasWrapper>{headCanvases[0]}</StaticCanvasWrapper>
+          <StaticCanvasWrapper>{bodyCanvases[0]}</StaticCanvasWrapper>
+          <StaticCanvasWrapper>{legsCanvases[0]}</StaticCanvasWrapper>
+        </div>
+      )}
     </div>
   );
 };

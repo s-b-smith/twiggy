@@ -34,36 +34,12 @@ const useImage = (props: UseImageProps): HTMLImageElement | false => {
   return imageRef.current && isImageLoaded ? imageRef.current : false;
 };
 
-// TODO: Make this looped, so it can be dynamic
+// TODO: Put the images in folders, then loop them
 interface ClothesImages {
-  heads: {
-    blackTopHat: HTMLImageElement;
-    blackFedora: HTMLImageElement;
-    blackBowlerHat: HTMLImageElement;
-    steampunkHat: HTMLImageElement;
-    cowboyHat: HTMLImageElement;
-    baseballCap: HTMLImageElement;
-    pirateHat: HTMLImageElement;
-  };
-  bodies: {
-    blackTshirt: HTMLImageElement;
-    femaleWhiteTop: HTMLImageElement;
-    femaleRedTop: HTMLImageElement;
-    dressShirt: HTMLImageElement;
-    bluePolo: HTMLImageElement;
-    redTshirtPocket: HTMLImageElement;
-  };
-  legs: {
-    trousers: HTMLImageElement;
-    whitePants: HTMLImageElement;
-    sweatPants: HTMLImageElement;
-    stripedPants: HTMLImageElement;
-    blueShorts: HTMLImageElement;
-    beachShorts: HTMLImageElement;
-    pinkSkirt: HTMLImageElement;
-    redSkirt: HTMLImageElement;
-    yellowSkirt: HTMLImageElement;
-  };
+  heads: HTMLImageElement[];
+  bodies: HTMLImageElement[];
+  legs: HTMLImageElement[];
+  shoes: HTMLImageElement[];
 }
 export const useClothesImages = (): ClothesImages | false => {
   const blackTopHat = useImage({
@@ -154,6 +130,38 @@ export const useClothesImages = (): ClothesImages | false => {
     src: '/images/yellow_skirt.png',
     name: 'yellow_skirt'
   });
+  const blackSneakers = useImage({
+    src: '/images/black_sneakers.png',
+    name: 'black_sneakers'
+  });
+  const brownDressShoes = useImage({
+    src: '/images/brown_dress_shoes.png',
+    name: 'brown_dress_shoes'
+  });
+  const whiteTennisShoes = useImage({
+    src: '/images/white_tennis_shoes.png',
+    name: 'white_tennis_shoes'
+  });
+  const brownFlats = useImage({
+    src: '/images/brown_flats.png',
+    name: 'brown_flats'
+  });
+  const flipFlops = useImage({
+    src: '/images/flip_flops.png',
+    name: 'flip_flops'
+  });
+  const punkBoots = useImage({
+    src: '/images/punk_boots.png',
+    name: 'punk_boots'
+  });
+  const clownShoes = useImage({
+    src: '/images/clown_shoes.png',
+    name: 'clown_shoes'
+  });
+  const cowboyBoots = useImage({
+    src: '/images/cowboy_boots.png',
+    name: 'cowboy_boots'
+  });
 
   const allImagesLoaded =
     blackTopHat &&
@@ -177,11 +185,19 @@ export const useClothesImages = (): ClothesImages | false => {
     beachShorts &&
     pinkSkirt &&
     redSkirt &&
-    yellowSkirt;
+    yellowSkirt &&
+    blackSneakers &&
+    brownDressShoes &&
+    whiteTennisShoes &&
+    brownFlats &&
+    flipFlops &&
+    punkBoots &&
+    clownShoes &&
+    cowboyBoots;
 
   return allImagesLoaded
     ? {
-        heads: {
+        heads: [
           blackTopHat,
           blackFedora,
           blackBowlerHat,
@@ -189,16 +205,9 @@ export const useClothesImages = (): ClothesImages | false => {
           cowboyHat,
           baseballCap,
           pirateHat
-        },
-        bodies: {
-          blackTshirt,
-          femaleWhiteTop,
-          femaleRedTop,
-          dressShirt,
-          bluePolo,
-          redTshirtPocket
-        },
-        legs: {
+        ],
+        bodies: [blackTshirt, femaleWhiteTop, femaleRedTop, dressShirt, bluePolo, redTshirtPocket],
+        legs: [
           trousers,
           whitePants,
           sweatPants,
@@ -208,7 +217,17 @@ export const useClothesImages = (): ClothesImages | false => {
           pinkSkirt,
           redSkirt,
           yellowSkirt
-        }
+        ],
+        shoes: [
+          blackSneakers,
+          brownDressShoes,
+          whiteTennisShoes,
+          brownFlats,
+          flipFlops,
+          punkBoots,
+          clownShoes,
+          cowboyBoots
+        ]
       }
     : false;
 };

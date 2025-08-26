@@ -1,1 +1,3 @@
 1. Randomly pull in different clothes items from png store each time app is loaded
+2. ChatGPT clothes image generation
+3. isLoading states (check after memoization)
