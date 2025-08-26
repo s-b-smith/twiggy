@@ -5,6 +5,8 @@ export interface DrawProps {
   ctx: CanvasRenderingContext2D;
   counter: number;
   image?: HTMLImageElement;
+  startX?: 'left' | 'center' | 'right';
+  startY?: 'top' | 'center' | 'bottom';
 }
 export interface CanvasProps {
   draw: (drawProps: DrawProps) => void;
@@ -13,10 +15,11 @@ export interface CanvasProps {
   redrawDependencies?: unknown[];
   style?: React.CSSProperties;
   image?: HTMLImageElement;
+  startX?: 'left' | 'center' | 'right';
+  startY?: 'top' | 'center' | 'bottom';
 }
 
 const CanvasWrapper = forwardRef<HTMLCanvasElement, CanvasProps>(function create(props, ref) {
-  // TODO: Work on centering the canvases with the new height
   return <canvas style={{ height: '100%', ...props.style }} ref={ref} />;
 });
 const Canvas = (props: CanvasProps) => {
