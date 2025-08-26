@@ -1,34 +1,29 @@
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import NavDrawer from './pages/NavDrawer';
-import theme from './theme';
 import EditorWrapper from './components/EditorWrapper';
 import { Route, Routes } from 'react-router';
 import EditorContent from 'components/EditorContent';
-
-export enum AppPaths {
-  Home = '',
-  Body = '/body',
-  Clothes = '/clothes',
-  Color = '/color',
-  Background = '/background'
-}
+import AppProviders from 'providers/AppProviders';
+import { AppPath } from 'constants/app';
 
 const App = () => {
-  const validPaths = Object.values(AppPaths);
+  const validPaths = Object.values(AppPath);
+  const wrapper = <EditorWrapper />;
+  const content = <EditorContent />;
 
   return (
-    <ThemeProvider theme={theme}>
+    <AppProviders>
       <CssBaseline />
       <NavDrawer />
       <Routes>
-        <Route path="/" element={<EditorWrapper />}>
+        <Route path="/" element={wrapper}>
           {validPaths.map(path => (
-            <Route key={path} path={path} element={<EditorContent />} />
+            <Route key={path} path={path} element={content} />
           ))}
           <Route path="*" element={<h2>404 Not Found</h2>} />
         </Route>
       </Routes>
-    </ThemeProvider>
+    </AppProviders>
   );
 };
 

@@ -27,8 +27,8 @@ import {
   styled,
   useTheme
 } from '@mui/material';
-import { AppPaths } from 'App';
-import { useGetActiveEditor } from 'hooks/activeEditorHooks';
+import { AppPath } from 'constants/app';
+import { useActiveEditor } from 'hooks/activeEditorHooks';
 import { useAppDispatch, useAppSelector } from 'hooks/react-redux-hooks';
 import { Link } from 'react-router';
 import { setIsOpen } from 'store/navBarSlice';
@@ -110,7 +110,7 @@ const NavDrawer = () => {
   const theme = useTheme();
   const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
   const dispatch = useAppDispatch();
-  const activeEditor = useGetActiveEditor();
+  const activeEditor = useActiveEditor();
 
   const handleDrawerOpen = () => {
     dispatch(setIsOpen(true));
@@ -122,15 +122,15 @@ const NavDrawer = () => {
   const getNavLink = (index: number): string => {
     switch (index) {
       case 0:
-        return AppPaths.Body;
+        return AppPath.Body;
       case 1:
-        return AppPaths.Clothes;
+        return AppPath.Clothes;
       case 2:
-        return AppPaths.Color;
+        return AppPath.Color;
       case 3:
-        return AppPaths.Background;
+        return AppPath.Background;
       default:
-        return AppPaths.Home;
+        return AppPath.Home;
     }
   };
   const getNavIcon = (index: number) => {

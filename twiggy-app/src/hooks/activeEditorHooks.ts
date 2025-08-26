@@ -1,36 +1,27 @@
-import { AppPaths } from 'App';
 import { useLocation } from 'react-router';
+import { AppPath, Editor } from 'constants/app';
 
-// TODO: Look into latest lazy export update
-export enum Editors {
-  Body,
-  Clothes,
-  Color,
-  Background,
-  None
-}
-
-export const useGetActiveEditor = (): Editors => {
+export const useActiveEditor = (): Editor => {
   const { pathname: currentPath } = useLocation();
 
   switch (currentPath) {
-    case AppPaths.Home:
+    case AppPath.Home:
     case '/':
-    case AppPaths.Body:
-      return Editors.Body;
-    case AppPaths.Clothes:
-      return Editors.Clothes;
-    case AppPaths.Color:
-      return Editors.Color;
-    case AppPaths.Background:
-      return Editors.Background;
+    case AppPath.Body:
+      return Editor.Body;
+    case AppPath.Clothes:
+      return Editor.Clothes;
+    case AppPath.Color:
+      return Editor.Color;
+    case AppPath.Background:
+      return Editor.Background;
     default:
-      return Editors.None;
+      return Editor.None;
   }
 };
 
-export const useIsEditorActive = (editor: Editors): boolean => {
-  const activeEditor = useGetActiveEditor();
+export const useIsEditorActive = (editor: Editor): boolean => {
+  const activeEditor = useActiveEditor();
 
   return editor === activeEditor;
 };

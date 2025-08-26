@@ -9,12 +9,13 @@ import {
 import { drawCircleTorso, drawOvalTorso, drawStickTorso } from '../../canvas/shapes/torsos';
 import { drawRoundLegs, drawRoundSkinnyLegs, drawStickLegs } from '../../canvas/shapes/legs';
 import { useAppSelector } from 'hooks/react-redux-hooks';
-import { Editors, useIsEditorActive } from 'hooks/activeEditorHooks';
+import { useIsEditorActive } from 'hooks/activeEditorHooks';
 import { useEffect } from 'react';
+import { Editor } from 'constants/app';
 
 const ColorEditor = () => {
   const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
-  const isEditorActive = useIsEditorActive(Editors.Color);
+  const isEditorActive = useIsEditorActive(Editor.Color);
 
   useEffect(() => {
     if (isEditorActive) {
