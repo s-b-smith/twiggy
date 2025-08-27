@@ -1,18 +1,18 @@
 {
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
-    "editor.formatOnPaste": false, 
-    "editor.formatOnType": false,
-    "editor.formatOnSave": true, 
-    "editor.formatOnSaveMode": "file",
-    "files.autoSave": "onFocusChange",
-    "vs-code-prettier-eslint.prettierLast": false,
-    "emmet.includeLanguages": {
-        "javascript": "javascriptreact",
-        "typescript": "typescriptreact"
-    },
-    "emmet.syntaxProfiles": {
-        "javascript": "jsx",
-        "typescript": "tsx"
-    },
-    "typescript.suggest.autoImports": true
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "files.autoSave": "onFocusChange",
+  "vs-code-prettier-eslint.prettierLast": false,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "typescript": "typescriptreact"
+  },
+  "emmet.syntaxProfiles": {
+    "javascript": "jsx",
+    "typescript": "tsx"
+  },
+  "typescript.suggest.autoImports": true
 }
