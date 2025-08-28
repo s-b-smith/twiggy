@@ -5,7 +5,7 @@ import {
   drawOvalHorizontalHead,
   drawOvalVerticalHead,
   drawSquareHead
-} from '../../canvas/shapes/heads';
+} from 'canvas/shapes/heads';
 import {
   drawCircleTorso,
   drawCircleTorsoNoArms,
@@ -13,15 +13,15 @@ import {
   drawOvalTorsoNoArms,
   drawStickTorso,
   drawTorso
-} from '../../canvas/shapes/torsos';
+} from 'canvas/shapes/torsos';
 import {
   drawOneMiddleLeg,
   drawRoundLegs,
   drawRoundSkinnyLegs,
   drawStickLegs
-} from '../../canvas/shapes/legs';
+} from 'canvas/shapes/legs';
 import { useIsEditorActive } from 'hooks/activeEditorHooks';
-import '../../styles/overlay.css';
+import 'styles/overlay.css';
 import { useMemo } from 'react';
 import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
 import React from 'react';

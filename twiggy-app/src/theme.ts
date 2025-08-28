@@ -1,10 +1,10 @@
 import { createTheme, responsiveFontSizes } from '@mui/material';
 import createMixins from '@mui/material/styles/createMixins';
-import WigglyCurves from './fonts/WigglyCurvesRegular.ttf';
-import SunnySpells from './fonts/SunnySpells.ttf';
-import Moskitoes from './fonts/Moskitoes.ttf';
-import MoskitoesShadow from './fonts/MoskitoesShadow.ttf';
-import TheFountainOfWishes from './fonts/TheFountainOfWishes.ttf';
+import WigglyCurves from 'fonts/WigglyCurvesRegular.ttf';
+import SunnySpells from 'fonts/SunnySpells.ttf';
+import Moskitoes from 'fonts/Moskitoes.ttf';
+import MoskitoesShadow from 'fonts/MoskitoesShadow.ttf';
+import TheFountainOfWishes from 'fonts/TheFountainOfWishes.ttf';
 
 export const Fonts = {
   WigglyCurves,

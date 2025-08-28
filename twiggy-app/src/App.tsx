@@ -1,6 +1,6 @@
 import { CssBaseline } from '@mui/material';
-import NavDrawer from './pages/NavDrawer';
-import EditorWrapper from './components/EditorWrapper';
+import NavDrawer from 'pages/NavDrawer';
+import EditorWrapper from 'components/EditorWrapper';
 import { Route, Routes } from 'react-router';
 import EditorContent from 'components/EditorContent';
 import AppProviders from 'providers/AppProviders';

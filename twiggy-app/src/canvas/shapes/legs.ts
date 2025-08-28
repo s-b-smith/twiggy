@@ -1,5 +1,5 @@
-import { DrawProps } from '../../components/Canvas';
-import { defaults, setDefaultProps } from '../defaults';
+import { DrawProps } from 'components/Canvas';
+import { defaults, setDefaultProps } from 'canvas/defaults';
 
 const drawStickLegsHelper = (
   ctx: CanvasRenderingContext2D,
