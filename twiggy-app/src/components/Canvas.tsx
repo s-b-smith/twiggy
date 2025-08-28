@@ -22,7 +22,7 @@ export interface CanvasProps {
 const CanvasWrapper = forwardRef<HTMLCanvasElement, CanvasProps>(function create(props, ref) {
   return <canvas style={{ height: '100%', ...props.style }} ref={ref} />;
 });
-const Canvas = (props: CanvasProps) => {
+const Canvas = (props: CanvasProps): React.ReactElement => {
   const canvasRef = useCanvas(props);
 
   return <CanvasWrapper ref={canvasRef} {...props} />;

@@ -60,7 +60,7 @@ const BodyEditor = () => {
       ],
       stepsAwayFromStart.head
     );
-  }, [isEditorActive]); // eslint-disable-line
+  }, [isEditorActive]); // eslint-disable-line react-hooks/exhaustive-deps
   const bodyCanvases = useMemo(() => {
     return rotateArray(
       [
@@ -74,7 +74,7 @@ const BodyEditor = () => {
       ],
       stepsAwayFromStart.body
     );
-  }, [isEditorActive]); // eslint-disable-line
+  }, [isEditorActive]); // eslint-disable-line react-hooks/exhaustive-deps
   const legsCanvases = useMemo(() => {
     return rotateArray(
       [
@@ -86,7 +86,7 @@ const BodyEditor = () => {
       ],
       stepsAwayFromStart.legs
     );
-  }, [isEditorActive]); // eslint-disable-line
+  }, [isEditorActive]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (
     isNext: boolean,
