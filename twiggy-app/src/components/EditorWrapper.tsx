@@ -13,8 +13,8 @@ const EditorWrapper = () => {
         textAlign: 'center',
         alignItems: 'center',
         ml: isNavDrawerOpen ? '240px' : '65px',
-        mt: '80px',
-        maxWidth: `calc(100% - '65px'})`,
+        mt: '5em', // 70px
+        maxWidth: 'calc(100% - 65px)',
         overflowX: 'clip'
       }}
     >

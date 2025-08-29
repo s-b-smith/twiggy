@@ -1,3 +1,21 @@
 1. Randomly pull in different clothes items from png store each time app is loaded
 2. ChatGPT clothes image generation
 3. isLoading states (check after memoization)
+4. Adjustable/rotatable bodies
+5. Resizable/rotatable clothes
+6. Dynamic layout (em vs px). Also consider re-drawing canvases when window resizes
+7. Allow user to set screen scale (cookie) (detect when canvas is drawn weird and show notice?)
+8. Confirm changes will be lost on leaving/refreshing window
+9. Timeout warning after 2 hours
+10. Stylized next/prev buttons, different font for menu items
+11. Allow for custom image uploads for body/clothes/background
+
+Color:
+- Dashed box around editable area
+- 2 options: pen size and color
+- Change tooltip to paint brush in area
+
+Export created avatar
+- Export button in top right corner
+- Display preview confirmation modal
+- Allow basic image file types

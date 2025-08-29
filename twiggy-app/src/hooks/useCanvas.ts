@@ -1,5 +1,5 @@
-import { useRef, useEffect } from 'react';
-import { CanvasProps, DrawProps } from '../components/Canvas';
+import { CanvasProps, DrawProps } from 'components/Canvas';
+import { useEffect, useRef } from 'react';
 
 const useCanvas = (props: CanvasProps) => {
   const { draw, isAnimated, image, startX, startY } = props;

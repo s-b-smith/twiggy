@@ -1,13 +1,13 @@
+import { allClothesUrls } from 'assets/clothes/clothesUrls';
+import { drawImage } from 'canvas/images';
 import Canvas from 'components/Canvas';
 import TwiggyCarousel from 'components/TwiggyCarousel';
-import { useIsEditorActive } from 'hooks/activeEditorHooks';
-import '../../styles/overlay.css';
-import { useMemo } from 'react';
-import { drawImage } from 'canvas/clothes/clothes';
-import { useClothesImages } from 'hooks/imageHooks';
-import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
-import React from 'react';
 import { Editor } from 'constants/app';
+import { useIsEditorActive } from 'hooks/activeEditorHooks';
+import { useImages } from 'hooks/imageHooks';
+import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
+import React, { useMemo } from 'react';
+import 'styles/overlay.css';
 import { rotateArray } from 'utils/arrayUtils';
 
 interface ClothesStepsAwayFromStart {
@@ -23,103 +23,103 @@ const stepsAwayFromStart: ClothesStepsAwayFromStart = {
   shoes: 0
 };
 
-// TODO: Work on initial load time
+// TODO: Work on loading state (for all menu items). Check into doing 1 context for URLs
 const ClothesEditor = () => {
   const isEditorActive = useIsEditorActive(Editor.Clothes);
-  const clothesImages = useClothesImages();
 
-  const headCanvasStyles = { width: '150px', height: '75px' };
+  const headImages = useImages(allClothesUrls.heads);
+  const bodyImages = useImages(allClothesUrls.bodies);
+  const legsImages = useImages(allClothesUrls.legs);
+  const shoesImages = useImages(allClothesUrls.shoes);
+
   const headCanvases = useMemo(() => {
-    if (!clothesImages) {
+    if (!headImages.allReady) {
       return [];
     }
 
     return rotateArray(
       [
         <React.Fragment key={'drawClothesHeadEmpty'}></React.Fragment>,
-        ...Object.entries(clothesImages.heads).map(([key, head]) => {
+        ...Object.entries(headImages.images).map(([key, head]) => {
           return (
             <Canvas
               key={`drawClothesHead${key}`}
               draw={drawImage}
-              image={head}
-              style={headCanvasStyles}
+              image={head.img}
+              style={{ width: '150px', height: '75px' }}
             />
           );
         })
       ],
       stepsAwayFromStart.head
     );
-  }, [isEditorActive, clothesImages]); // eslint-disable-line
-  const bodyCanvasStyles = { width: '300px' };
+  }, [isEditorActive, headImages.allReady]); // eslint-disable-line react-hooks/exhaustive-deps
   const bodyCanvases = useMemo(() => {
-    if (!clothesImages) {
+    if (!bodyImages.allReady) {
       return [];
     }
 
     return rotateArray(
       [
         <React.Fragment key={'drawClothesBodyEmpty'}></React.Fragment>,
-        ...Object.entries(clothesImages.bodies).map(([key, body]) => {
+        ...Object.entries(bodyImages.images).map(([key, body]) => {
           return (
             <Canvas
               key={`drawClothesBody${key}`}
               draw={drawImage}
-              image={body}
-              style={bodyCanvasStyles}
+              image={body.img}
+              style={{ width: '300px' }}
             />
           );
         })
       ],
       stepsAwayFromStart.body
     );
-  }, [isEditorActive, clothesImages]); // eslint-disable-line
-  const legsCanvasStyles = { width: '300px' };
+  }, [isEditorActive, bodyImages.allReady]); // eslint-disable-line react-hooks/exhaustive-deps
   const legsCanvases = useMemo(() => {
-    if (!clothesImages) {
+    if (!legsImages.allReady) {
       return [];
     }
 
     return rotateArray(
       [
         <React.Fragment key={'drawClothesLegsEmpty'}></React.Fragment>,
-        ...Object.entries(clothesImages.legs).map(([key, legsImage]) => {
+        ...Object.entries(legsImages.images).map(([key, legs]) => {
           return (
             <Canvas
               key={`drawClothesLegs${key}`}
               draw={drawImage}
-              image={legsImage}
-              style={legsCanvasStyles}
+              image={legs.img}
+              style={{ width: '300px' }}
             />
           );
         })
       ],
       stepsAwayFromStart.legs
     );
-  }, [isEditorActive, clothesImages]); // eslint-disable-line
-  const shoesCanvasStyles = { width: '300px' };
+  }, [isEditorActive, legsImages.allReady]); // eslint-disable-line react-hooks/exhaustive-deps
   const shoesCanvases = useMemo(() => {
-    if (!clothesImages) {
+    if (!shoesImages.allReady) {
       return [];
     }
 
     return rotateArray(
       [
         <React.Fragment key={'drawClothesShoesEmpty'}></React.Fragment>,
-        ...Object.entries(clothesImages.shoes).map(([key, shoesImage]) => {
+        ...Object.entries(shoesImages.images).map(([key, shoes]) => {
           return (
             <Canvas
               key={`drawClothesShoes${key}`}
               draw={drawImage}
-              image={shoesImage}
-              style={shoesCanvasStyles}
+              image={shoes.img}
+              style={{ width: '300px' }}
             />
           );
         })
       ],
       stepsAwayFromStart.shoes
     );
-  }, [isEditorActive, clothesImages]); // eslint-disable-line
+  }, [isEditorActive, shoesImages.allReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (
     isNext: boolean,
@@ -141,9 +141,6 @@ const ClothesEditor = () => {
     }
   };
 
-  if (!clothesImages) {
-    return;
-  }
   return (
     <div className="overlay-component" style={{ zIndex: 2 }}>
       {isEditorActive ? (
@@ -187,10 +184,10 @@ const ClothesEditor = () => {
         <div className="canvas-overlay">
           <StaticCanvasWrapper>{headCanvases[0]}</StaticCanvasWrapper>
           <StaticCanvasWrapper>{bodyCanvases[0]}</StaticCanvasWrapper>
-          <StaticCanvasWrapper height={'160px'} zIndex={3}>
+          <StaticCanvasWrapper style={{ height: '160px', zIndex: 3 }}>
             {legsCanvases[0]}
           </StaticCanvasWrapper>
-          <StaticCanvasWrapper height={'120px'} marginTop={'-60px'}>
+          <StaticCanvasWrapper style={{ height: '120px', marginTop: '-60px' }}>
             {shoesCanvases[0]}
           </StaticCanvasWrapper>
         </div>

@@ -1,11 +1,15 @@
-import Canvas, { CanvasProps } from 'components/Canvas';
-import TwiggyCarousel from 'components/TwiggyCarousel';
 import {
   drawCircleHead,
   drawOvalHorizontalHead,
   drawOvalVerticalHead,
   drawSquareHead
-} from '../../canvas/shapes/heads';
+} from 'canvas/shapes/heads';
+import {
+  drawOneMiddleLeg,
+  drawRoundLegs,
+  drawRoundSkinnyLegs,
+  drawStickLegs
+} from 'canvas/shapes/legs';
 import {
   drawCircleTorso,
   drawCircleTorsoNoArms,
@@ -13,19 +17,14 @@ import {
   drawOvalTorsoNoArms,
   drawStickTorso,
   drawTorso
-} from '../../canvas/shapes/torsos';
-import {
-  drawOneMiddleLeg,
-  drawRoundLegs,
-  drawRoundSkinnyLegs,
-  drawStickLegs
-} from '../../canvas/shapes/legs';
-import { useIsEditorActive } from 'hooks/activeEditorHooks';
-import '../../styles/overlay.css';
-import { useMemo } from 'react';
-import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
-import React from 'react';
+} from 'canvas/shapes/torsos';
+import Canvas, { CanvasProps } from 'components/Canvas';
+import TwiggyCarousel from 'components/TwiggyCarousel';
 import { Editor } from 'constants/app';
+import { useIsEditorActive } from 'hooks/activeEditorHooks';
+import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
+import React, { useMemo } from 'react';
+import 'styles/overlay.css';
 import { rotateArray } from 'utils/arrayUtils';
 
 const HeadCanvas = (canvasProps: CanvasProps & { key: React.Key }) => {
@@ -60,7 +59,7 @@ const BodyEditor = () => {
       ],
       stepsAwayFromStart.head
     );
-  }, [isEditorActive]); // eslint-disable-line
+  }, [isEditorActive]); // eslint-disable-line react-hooks/exhaustive-deps
   const bodyCanvases = useMemo(() => {
     return rotateArray(
       [
@@ -74,7 +73,7 @@ const BodyEditor = () => {
       ],
       stepsAwayFromStart.body
     );
-  }, [isEditorActive]); // eslint-disable-line
+  }, [isEditorActive]); // eslint-disable-line react-hooks/exhaustive-deps
   const legsCanvases = useMemo(() => {
     return rotateArray(
       [
@@ -86,7 +85,7 @@ const BodyEditor = () => {
       ],
       stepsAwayFromStart.legs
     );
-  }, [isEditorActive]); // eslint-disable-line
+  }, [isEditorActive]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (
     isNext: boolean,

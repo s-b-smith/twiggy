@@ -6,8 +6,10 @@ interface TwiggyCarouselProps extends CarouselProps {
   isEnabled?: boolean;
   navButtonPaddingTop?: string;
   navButtonPaddingBottom?: string;
+  marginTop?: string;
 }
 const TwiggyCarousel = (props: TwiggyCarouselProps) => {
+  // TODO: Calculate ANY viewport changes, instead of just when the nav drawer is open
   const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
   const isEnabled = props.isEnabled === undefined || props.isEnabled;
 
@@ -23,7 +25,8 @@ const TwiggyCarousel = (props: TwiggyCarouselProps) => {
       height={props.height ?? '200px'}
       sx={{
         marginLeft: isNavDrawerOpen ? '-87.5px' : '0px',
-        width: `calc(100% + ${isNavDrawerOpen ? '175px' : '0%'})`
+        width: `calc(100% + ${isNavDrawerOpen ? '175px' : '0%'})`,
+        marginTop: props.marginTop ?? undefined
       }}
       navButtonsWrapperProps={{
         style: {

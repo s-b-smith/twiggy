@@ -1,5 +1,5 @@
-import { useLocation } from 'react-router';
 import { AppPath, Editor } from 'constants/app';
+import { useLocation } from 'react-router';
 
 export const useActiveEditor = (): Editor => {
   const { pathname: currentPath } = useLocation();

@@ -1,25 +1,13 @@
 interface StaticCanvasWrapperProps {
   children: React.ReactNode;
-  height?: string;
-  marginTop?: string;
-  marginBottom?: string;
-  zIndex?: number;
+  style?: React.CSSProperties;
 }
-// TODO: Cleanup style properties
-const StaticCanvasWrapper = ({
-  children,
-  height,
-  marginTop,
-  marginBottom,
-  zIndex
-}: StaticCanvasWrapperProps) => {
+const StaticCanvasWrapper = ({ children, style }: StaticCanvasWrapperProps) => {
   return (
     <div
       style={{
-        height: height ?? '200px',
-        marginTop: marginTop ?? '',
-        marginBottom: marginBottom ?? '',
-        zIndex: zIndex ?? ''
+        height: style?.height ?? '200px',
+        ...style
       }}
     >
       {children}

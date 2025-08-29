@@ -1,10 +1,10 @@
 import { CssBaseline } from '@mui/material';
-import NavDrawer from './pages/NavDrawer';
-import EditorWrapper from './components/EditorWrapper';
-import { Route, Routes } from 'react-router';
 import EditorContent from 'components/EditorContent';
-import AppProviders from 'providers/AppProviders';
+import EditorWrapper from 'components/EditorWrapper';
 import { AppPath } from 'constants/app';
+import NavDrawer from 'pages/NavDrawer';
+import AppProviders from 'providers/AppProviders';
+import { Route, Routes } from 'react-router';
 
 const App = () => {
   const validPaths = Object.values(AppPath);

@@ -1,5 +1,5 @@
-import { DrawProps } from '../../components/Canvas';
-import { setDefaultProps } from '../defaults';
+import { setDefaultProps } from 'canvas/defaults';
+import { DrawProps } from 'components/Canvas';
 
 export const drawImage = (props: DrawProps) => {
   if (!props.image) {
