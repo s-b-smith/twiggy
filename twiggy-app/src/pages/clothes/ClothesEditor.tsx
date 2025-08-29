@@ -185,10 +185,10 @@ const ClothesEditor = () => {
         <div className="canvas-overlay">
           <StaticCanvasWrapper>{headCanvases[0]}</StaticCanvasWrapper>
           <StaticCanvasWrapper>{bodyCanvases[0]}</StaticCanvasWrapper>
-          <StaticCanvasWrapper height={'160px'} zIndex={3}>
+          <StaticCanvasWrapper style={{ height: '160px', zIndex: 3 }}>
             {legsCanvases[0]}
           </StaticCanvasWrapper>
-          <StaticCanvasWrapper height={'120px'} marginTop={'-60px'}>
+          <StaticCanvasWrapper style={{ height: '120px', marginTop: '-60px' }}>
             {shoesCanvases[0]}
           </StaticCanvasWrapper>
         </div>
