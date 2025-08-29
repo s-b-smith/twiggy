@@ -23,7 +23,7 @@ const stepsAwayFromStart: ClothesStepsAwayFromStart = {
   shoes: 0
 };
 
-// TODO: Work on loading state (for all menu items)
+// TODO: Work on loading state (for all menu items). Check into doing 1 context for URLs
 const ClothesEditor = () => {
   const isEditorActive = useIsEditorActive(Editor.Clothes);
 
