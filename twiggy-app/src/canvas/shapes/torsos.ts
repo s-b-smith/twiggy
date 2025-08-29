@@ -1,5 +1,5 @@
-import { DrawProps } from 'components/Canvas';
 import { defaults, setDefaultProps } from 'canvas/defaults';
+import { DrawProps } from 'components/Canvas';
 
 const drawStickArms = (
   ctx: CanvasRenderingContext2D,

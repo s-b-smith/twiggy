@@ -1,5 +1,5 @@
-import { DrawProps } from 'components/Canvas';
 import { defaults, setDefaultProps } from 'canvas/defaults';
+import { DrawProps } from 'components/Canvas';
 
 export const drawCircleHead = (props: DrawProps) => {
   const ctx = setDefaultProps(props.ctx);

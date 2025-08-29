@@ -1,14 +1,13 @@
+import backgroundUrls from 'assets/backgroundUrls';
+import { drawImage } from 'canvas/images';
 import Canvas from 'components/Canvas';
 import TwiggyCarousel from 'components/TwiggyCarousel';
-import { useIsEditorActive } from 'hooks/activeEditorHooks';
-import { useMemo } from 'react';
 import { Editor } from 'constants/app';
-import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
+import { useIsEditorActive } from 'hooks/activeEditorHooks';
 import { useImages } from 'hooks/imageHooks';
-import backgroundUrls from 'assets/backgroundUrls';
-import React from 'react';
+import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
+import React, { useMemo } from 'react';
 import { rotateArray } from 'utils/arrayUtils';
-import { drawImage } from 'canvas/images';
 
 let stepsAwayFromStart = 0;
 

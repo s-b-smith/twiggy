@@ -1,11 +1,15 @@
-import Canvas, { CanvasProps } from 'components/Canvas';
-import TwiggyCarousel from 'components/TwiggyCarousel';
 import {
   drawCircleHead,
   drawOvalHorizontalHead,
   drawOvalVerticalHead,
   drawSquareHead
 } from 'canvas/shapes/heads';
+import {
+  drawOneMiddleLeg,
+  drawRoundLegs,
+  drawRoundSkinnyLegs,
+  drawStickLegs
+} from 'canvas/shapes/legs';
 import {
   drawCircleTorso,
   drawCircleTorsoNoArms,
@@ -14,18 +18,13 @@ import {
   drawStickTorso,
   drawTorso
 } from 'canvas/shapes/torsos';
-import {
-  drawOneMiddleLeg,
-  drawRoundLegs,
-  drawRoundSkinnyLegs,
-  drawStickLegs
-} from 'canvas/shapes/legs';
-import { useIsEditorActive } from 'hooks/activeEditorHooks';
-import 'styles/overlay.css';
-import { useMemo } from 'react';
-import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
-import React from 'react';
+import Canvas, { CanvasProps } from 'components/Canvas';
+import TwiggyCarousel from 'components/TwiggyCarousel';
 import { Editor } from 'constants/app';
+import { useIsEditorActive } from 'hooks/activeEditorHooks';
+import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
+import React, { useMemo } from 'react';
+import 'styles/overlay.css';
 import { rotateArray } from 'utils/arrayUtils';
 
 const HeadCanvas = (canvasProps: CanvasProps & { key: React.Key }) => {

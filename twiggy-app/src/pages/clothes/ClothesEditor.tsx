@@ -1,15 +1,14 @@
+import { allClothesUrls } from 'assets/clothes/clothesUrls';
+import { drawImage } from 'canvas/images';
 import Canvas from 'components/Canvas';
 import TwiggyCarousel from 'components/TwiggyCarousel';
-import { useIsEditorActive } from 'hooks/activeEditorHooks';
-import 'styles/overlay.css';
-import { useMemo } from 'react';
-import { drawImage } from 'canvas/images';
-import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
-import React from 'react';
 import { Editor } from 'constants/app';
-import { rotateArray } from 'utils/arrayUtils';
-import { allClothesUrls } from 'assets/clothes/clothesUrls';
+import { useIsEditorActive } from 'hooks/activeEditorHooks';
 import { useImages } from 'hooks/imageHooks';
+import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
+import React, { useMemo } from 'react';
+import 'styles/overlay.css';
+import { rotateArray } from 'utils/arrayUtils';
 
 interface ClothesStepsAwayFromStart {
   head: number;

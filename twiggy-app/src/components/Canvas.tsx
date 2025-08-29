@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
 import useCanvas from 'hooks/useCanvas';
+import { forwardRef } from 'react';
 
 export interface DrawProps {
   ctx: CanvasRenderingContext2D;
