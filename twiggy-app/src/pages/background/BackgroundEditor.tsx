@@ -1,4 +1,4 @@
-import backgroundUrls from 'assets/backgroundUrls';
+import assetUrls from 'assets/assetUrls';
 import { drawImage } from 'canvas/images';
 import Canvas from 'components/Canvas';
 import TwiggyCarousel from 'components/TwiggyCarousel';
@@ -14,7 +14,7 @@ let stepsAwayFromStart = 0;
 const BackgroundEditor = () => {
   const isEditorActive = useIsEditorActive(Editor.Background);
 
-  const backgroundImages = useImages(backgroundUrls);
+  const backgroundImages = useImages(assetUrls.backgrounds);
 
   const backgroundCanvases = useMemo(() => {
     if (!backgroundImages.allReady) {

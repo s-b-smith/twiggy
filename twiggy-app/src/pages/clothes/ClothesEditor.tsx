@@ -1,4 +1,4 @@
-import { allClothesUrls } from 'assets/clothes/clothesUrls';
+import assetUrls from 'assets/assetUrls';
 import { drawImage } from 'canvas/images';
 import Canvas from 'components/Canvas';
 import TwiggyCarousel from 'components/TwiggyCarousel';
@@ -27,10 +27,10 @@ const stepsAwayFromStart: ClothesStepsAwayFromStart = {
 const ClothesEditor = () => {
   const isEditorActive = useIsEditorActive(Editor.Clothes);
 
-  const headImages = useImages(allClothesUrls.heads);
-  const bodyImages = useImages(allClothesUrls.bodies);
-  const legsImages = useImages(allClothesUrls.legs);
-  const shoesImages = useImages(allClothesUrls.shoes);
+  const headImages = useImages(assetUrls.clothes.heads);
+  const bodyImages = useImages(assetUrls.clothes.bodies);
+  const legsImages = useImages(assetUrls.clothes.legs);
+  const shoesImages = useImages(assetUrls.clothes.shoes);
 
   const headCanvases = useMemo(() => {
     if (!headImages.allReady) {
