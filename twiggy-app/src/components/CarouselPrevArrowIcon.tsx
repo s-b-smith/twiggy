@@ -1,0 +1,18 @@
+import SvgIcon from '@mui/material/SvgIcon';
+
+const CarouselPrevArrowIcon = () => {
+  return (
+    <SvgIcon>
+      <svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+        <path
+          d="M 201 191 L 113 243 L 116 248 L 112 254 L 198 307 L 204 300 L 207 300 L 209 260 L 288 255 L 371 264 L 372 258 L 383 259 L 383 249 L 387 248 L 387 237 L 282 242 L 249 242 L 209 238 L 209 195 L 204 195 L 202 192 Z"
+          fill="#000000"
+          stroke="none"
+        />
+        <path d="M 189 216 L 136 247 L 189 285 L 189 217 Z" fill="#1976d2" stroke="none" />
+      </svg>
+    </SvgIcon>
+  );
+};
+
+export default CarouselPrevArrowIcon;

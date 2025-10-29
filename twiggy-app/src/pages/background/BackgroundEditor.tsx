@@ -5,11 +5,9 @@ import TwiggyCarousel from 'components/TwiggyCarousel';
 import { Editor } from 'constants/app';
 import { useIsEditorActive } from 'hooks/activeEditorHooks';
 import { useImages } from 'hooks/imageHooks';
-import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
 import React, { useMemo } from 'react';
-import { rotateArray } from 'utils/arrayUtils';
 
-let stepsAwayFromStart = 0;
+let backgroundIndex = 0;
 
 const BackgroundEditor = () => {
   const isEditorActive = useIsEditorActive(Editor.Background);
@@ -21,22 +19,19 @@ const BackgroundEditor = () => {
       return [];
     }
 
-    return rotateArray(
-      [
-        <React.Fragment key={'drawBackgroundEmpty'}></React.Fragment>,
-        ...Object.entries(backgroundImages.images).map(([key, background]) => {
-          return (
-            <Canvas
-              key={`drawBackground${key}`}
-              draw={drawImage}
-              image={background.img}
-              style={{ display: 'block', width: '100%', height: '100%' }} // width: 84.8em
-            />
-          );
-        })
-      ],
-      stepsAwayFromStart
-    );
+    return [
+      <React.Fragment key={'drawBackgroundEmpty'}></React.Fragment>,
+      ...Object.entries(backgroundImages.images).map(([key, background]) => {
+        return (
+          <Canvas
+            key={`drawBackground${key}`}
+            draw={drawImage}
+            image={background.img}
+            style={{ display: 'block', width: '100%', height: '100%' }} // width: 84.8em
+          />
+        );
+      })
+    ];
   }, [isEditorActive, backgroundImages.allReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (isNext: boolean, now: number | undefined) => {
@@ -45,32 +40,28 @@ const BackgroundEditor = () => {
     }
 
     if (now === 0) {
-      stepsAwayFromStart = 0;
+      backgroundIndex = 0;
     } else {
       if (isNext) {
-        stepsAwayFromStart++;
+        backgroundIndex++;
       } else {
-        stepsAwayFromStart--;
+        backgroundIndex--;
       }
     }
   };
 
   return (
     <div className="overlay-component" style={{ zIndex: 0 }}>
-      {isEditorActive ? (
-        <TwiggyCarousel
-          next={(now?: number) => handleChange(true, now)}
-          prev={(now?: number) => handleChange(false, now)}
-          height={'40.65em'} // 650px
-          marginTop={'-0.7em'}
-        >
-          {backgroundCanvases}
-        </TwiggyCarousel>
-      ) : (
-        <StaticCanvasWrapper style={{ height: '40.65em', marginTop: '-0.7em' }}>
-          {backgroundCanvases[0]}
-        </StaticCanvasWrapper>
-      )}
+      <TwiggyCarousel
+        isEnabled={isEditorActive}
+        index={backgroundIndex}
+        onNextClick={(now?: number) => handleChange(true, now)}
+        onPrevClick={(now?: number) => handleChange(false, now)}
+        height={'40.65em'} // 650px
+        marginTop={'-0.7em'}
+      >
+        {backgroundCanvases}
+      </TwiggyCarousel>
     </div>
   );
 };

@@ -5,18 +5,16 @@ import TwiggyCarousel from 'components/TwiggyCarousel';
 import { Editor } from 'constants/app';
 import { useIsEditorActive } from 'hooks/activeEditorHooks';
 import { useImages } from 'hooks/imageHooks';
-import StaticCanvasWrapper from 'pages/StaticCanvasWrapper';
 import React, { useMemo } from 'react';
 import 'styles/overlay.css';
-import { rotateArray } from 'utils/arrayUtils';
 
-interface ClothesStepsAwayFromStart {
+interface ClothesIndices {
   head: number;
   body: number;
   legs: number;
   shoes: number;
 }
-const stepsAwayFromStart: ClothesStepsAwayFromStart = {
+const clothesIndices: ClothesIndices = {
   head: 0,
   body: 0,
   legs: 0,
@@ -37,161 +35,144 @@ const ClothesEditor = () => {
       return [];
     }
 
-    return rotateArray(
-      [
-        <React.Fragment key={'drawClothesHeadEmpty'}></React.Fragment>,
-        ...Object.entries(headImages.images).map(([key, head]) => {
-          return (
-            <Canvas
-              key={`drawClothesHead${key}`}
-              draw={drawImage}
-              image={head.img}
-              style={{ width: '150px', height: '75px' }}
-            />
-          );
-        })
-      ],
-      stepsAwayFromStart.head
-    );
+    return [
+      <React.Fragment key={'drawClothesHeadEmpty'}></React.Fragment>,
+      ...Object.entries(headImages.images).map(([key, head]) => {
+        return (
+          <Canvas
+            key={`drawClothesHead${key}`}
+            draw={drawImage}
+            image={head.img}
+            style={{ width: '150px', height: '75px' }}
+          />
+        );
+      })
+    ];
   }, [isEditorActive, headImages.allReady]); // eslint-disable-line react-hooks/exhaustive-deps
   const bodyCanvases = useMemo(() => {
     if (!bodyImages.allReady) {
       return [];
     }
 
-    return rotateArray(
-      [
-        <React.Fragment key={'drawClothesBodyEmpty'}></React.Fragment>,
-        ...Object.entries(bodyImages.images).map(([key, body]) => {
-          return (
-            <Canvas
-              key={`drawClothesBody${key}`}
-              draw={drawImage}
-              image={body.img}
-              style={{ width: '300px' }}
-            />
-          );
-        })
-      ],
-      stepsAwayFromStart.body
-    );
+    return [
+      <React.Fragment key={'drawClothesBodyEmpty'}></React.Fragment>,
+      ...Object.entries(bodyImages.images).map(([key, body]) => {
+        return (
+          <Canvas
+            key={`drawClothesBody${key}`}
+            draw={drawImage}
+            image={body.img}
+            style={{ width: '300px' }}
+          />
+        );
+      })
+    ];
   }, [isEditorActive, bodyImages.allReady]); // eslint-disable-line react-hooks/exhaustive-deps
   const legsCanvases = useMemo(() => {
     if (!legsImages.allReady) {
       return [];
     }
 
-    return rotateArray(
-      [
-        <React.Fragment key={'drawClothesLegsEmpty'}></React.Fragment>,
-        ...Object.entries(legsImages.images).map(([key, legs]) => {
-          return (
-            <Canvas
-              key={`drawClothesLegs${key}`}
-              draw={drawImage}
-              image={legs.img}
-              style={{ width: '300px' }}
-            />
-          );
-        })
-      ],
-      stepsAwayFromStart.legs
-    );
+    return [
+      <React.Fragment key={'drawClothesLegsEmpty'}></React.Fragment>,
+      ...Object.entries(legsImages.images).map(([key, legs]) => {
+        return (
+          <Canvas
+            key={`drawClothesLegs${key}`}
+            draw={drawImage}
+            image={legs.img}
+            style={{ width: '300px' }}
+          />
+        );
+      })
+    ];
   }, [isEditorActive, legsImages.allReady]); // eslint-disable-line react-hooks/exhaustive-deps
   const shoesCanvases = useMemo(() => {
     if (!shoesImages.allReady) {
       return [];
     }
 
-    return rotateArray(
-      [
-        <React.Fragment key={'drawClothesShoesEmpty'}></React.Fragment>,
-        ...Object.entries(shoesImages.images).map(([key, shoes]) => {
-          return (
-            <Canvas
-              key={`drawClothesShoes${key}`}
-              draw={drawImage}
-              image={shoes.img}
-              style={{ width: '300px' }}
-            />
-          );
-        })
-      ],
-      stepsAwayFromStart.shoes
-    );
+    return [
+      <React.Fragment key={'drawClothesShoesEmpty'}></React.Fragment>,
+      ...Object.entries(shoesImages.images).map(([key, shoes]) => {
+        return (
+          <Canvas
+            key={`drawClothesShoes${key}`}
+            draw={drawImage}
+            image={shoes.img}
+            style={{ width: '300px' }}
+          />
+        );
+      })
+    ];
   }, [isEditorActive, shoesImages.allReady]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleChange = (
     isNext: boolean,
     now: number | undefined,
-    stepsAwayFromStartKey: keyof ClothesStepsAwayFromStart
+    clothesIndex: keyof ClothesIndices
   ) => {
     if (now === undefined) {
       return;
     }
 
     if (now === 0) {
-      stepsAwayFromStart[stepsAwayFromStartKey] = 0;
+      clothesIndices[clothesIndex] = 0;
     } else {
       if (isNext) {
-        stepsAwayFromStart[stepsAwayFromStartKey]++;
+        clothesIndices[clothesIndex]++;
       } else {
-        stepsAwayFromStart[stepsAwayFromStartKey]--;
+        clothesIndices[clothesIndex]--;
       }
     }
   };
 
+  // TODO: For some reason the shoes arrows disappeared
+  // z index is 2
   return (
     <div className="overlay-component" style={{ zIndex: 2 }}>
-      {isEditorActive ? (
-        <div>
+      <TwiggyCarousel
+        isEnabled={isEditorActive}
+        index={clothesIndices['head']}
+        onNextClick={(now?: number) => handleChange(true, now, 'head')}
+        onPrevClick={(now?: number) => handleChange(false, now, 'head')}
+      >
+        {headCanvases}
+      </TwiggyCarousel>
+      <TwiggyCarousel
+        isEnabled={isEditorActive}
+        index={clothesIndices['body']}
+        onNextClick={(now?: number) => handleChange(true, now, 'body')}
+        onPrevClick={(now?: number) => handleChange(false, now, 'body')}
+      >
+        {bodyCanvases}
+      </TwiggyCarousel>
+      <div className="overlay-container">
+        <div className="overlay-component" style={{ zIndex: 3 }}>
           <TwiggyCarousel
-            next={(now?: number) => handleChange(true, now, 'head')}
-            prev={(now?: number) => handleChange(false, now, 'head')}
+            isEnabled={isEditorActive}
+            index={clothesIndices['legs']}
+            onNextClick={(now?: number) => handleChange(true, now, 'legs')}
+            onPrevClick={(now?: number) => handleChange(false, now, 'legs')}
+            height={'160px'}
+            navButtonPaddingBottom="100px"
           >
-            {headCanvases}
+            {legsCanvases}
           </TwiggyCarousel>
+        </div>
+        <div className="overlay-component" style={{ marginTop: '100px' }}>
           <TwiggyCarousel
-            next={(now?: number) => handleChange(true, now, 'body')}
-            prev={(now?: number) => handleChange(false, now, 'body')}
+            isEnabled={isEditorActive}
+            index={clothesIndices['shoes']}
+            onNextClick={(now?: number) => handleChange(true, now, 'shoes')}
+            onPrevClick={(now?: number) => handleChange(false, now, 'shoes')}
+            height={'120px'}
+            navButtonPaddingTop="50px"
           >
-            {bodyCanvases}
+            {shoesCanvases}
           </TwiggyCarousel>
-          <div className="overlay-container">
-            <div className="overlay-component" style={{ zIndex: 3 }}>
-              <TwiggyCarousel
-                next={(now?: number) => handleChange(true, now, 'legs')}
-                prev={(now?: number) => handleChange(false, now, 'legs')}
-                height={'160px'}
-                navButtonPaddingBottom="100px"
-              >
-                {legsCanvases}
-              </TwiggyCarousel>
-            </div>
-            <div className="overlay-component" style={{ marginTop: '100px' }}>
-              <TwiggyCarousel
-                next={(now?: number) => handleChange(true, now, 'shoes')}
-                prev={(now?: number) => handleChange(false, now, 'shoes')}
-                height={'120px'}
-                navButtonPaddingTop="50px"
-              >
-                {shoesCanvases}
-              </TwiggyCarousel>
-            </div>
-          </div>
         </div>
-      ) : (
-        <div className="canvas-overlay">
-          <StaticCanvasWrapper>{headCanvases[0]}</StaticCanvasWrapper>
-          <StaticCanvasWrapper>{bodyCanvases[0]}</StaticCanvasWrapper>
-          <StaticCanvasWrapper style={{ height: '160px', zIndex: 3 }}>
-            {legsCanvases[0]}
-          </StaticCanvasWrapper>
-          <StaticCanvasWrapper style={{ height: '120px', marginTop: '-60px' }}>
-            {shoesCanvases[0]}
-          </StaticCanvasWrapper>
-        </div>
-      )}
+      </div>
     </div>
   );
 };

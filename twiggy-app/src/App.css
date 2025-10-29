@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.carousel-nav-wrapper {
+  background: transparent !important;
+  filter: none !important;
+}
+.carousel-nav-wrapper:hover button {
+  background-color: transparent !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
