@@ -3,26 +3,26 @@ import React from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { CarouselProps } from 'react-material-ui-carousel/dist/components/types';
 
+// TODO: See if you can consolidate sx props
 interface TwiggyCarouselProps extends CarouselProps {
-  isEnabled?: boolean;
   prevRef?: React.MutableRefObject<(() => void) | null>;
   nextRef?: React.MutableRefObject<(() => void) | null>;
+  isEnabled?: boolean; // Delete this
   onNextClick?: () => void; // Delete this
   onPrevClick?: () => void; // Delete this
-  navButtonPaddingTop?: string;
-  navButtonPaddingBottom?: string;
+  navButtonPaddingTop?: string; // Delete this
+  navButtonPaddingBottom?: string; // Delete this
   marginTop?: string;
+  height?: string;
 }
+// Navigation is de-coupled, this component cannot be directly interacted with
 const TwiggyCarousel = (props: TwiggyCarouselProps) => {
   // TODO: Calculate ANY viewport changes, instead of just when the nav drawer is open
   const { isOpen: isNavDrawerOpen } = useAppSelector(state => state.navBar);
-  const isEnabled = props.isEnabled === undefined || props.isEnabled;
 
   return (
     <Carousel
       autoPlay={false}
-      // navButtonsAlwaysVisible={isEnabled}
-      // navButtonsAlwaysInvisible
       swipe={false}
       animation="slide"
       duration={500}
@@ -33,37 +33,6 @@ const TwiggyCarousel = (props: TwiggyCarouselProps) => {
         width: `calc(100% + ${isNavDrawerOpen ? '175px' : '0%'})`,
         marginTop: props.marginTop ?? undefined
       }}
-      // navButtonsWrapperProps={{
-      //   className: 'carousel-nav-wrapper',
-      //   style: {
-      //     // position: 'absolute', // ← ensure zIndex takes effect
-      //     // zIndex: 1000,
-      //     margin: isNavDrawerOpen ? 'auto 87.5px' : 'auto',
-      //     paddingTop: props.navButtonPaddingTop ?? 'auto',
-      //     paddingBottom: props.navButtonPaddingBottom ?? 'auto'
-      //   }
-      // }}
-      // NextIcon={<CarouselNextArrowIcon />}
-      // PrevIcon={<CarouselPrevArrowIcon />}
-      // NavButton={({ onClick, next }) => {
-      //   return next
-      //     ? props.nextButton || (
-      //         <NextNavButton
-      //           onClick={() => {
-      //             onClick();
-      //             if (props.onNextClick) props.onNextClick();
-      //           }}
-      //         />
-      //       )
-      //     : props.prevButton || (
-      //         <PrevNavButton
-      //           onClick={() => {
-      //             onClick();
-      //             if (props.onPrevClick) props.onPrevClick();
-      //           }}
-      //         />
-      //       );
-      // }}
       NavButton={({ onClick, next, prev }) => {
         if (next && props.nextRef) {
           // Type is "Function", which causes a cascade of TypeScript violations

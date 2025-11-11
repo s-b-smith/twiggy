@@ -67,12 +67,33 @@ const NextNavButton = ({ onClick }: { onClick: () => void }) => {
 };
 
 interface CarouselNavArrowsProps {
+  isEnabled: boolean;
   prevOnClick: () => void;
   nextOnClick: () => void;
+  height?: string;
+  marginBottom?: string;
 }
-const CarouselNavArrows = ({ prevOnClick, nextOnClick }: CarouselNavArrowsProps) => {
+const CarouselNavArrows = ({
+  prevOnClick,
+  nextOnClick,
+  isEnabled,
+  height,
+  marginBottom
+}: CarouselNavArrowsProps) => {
+  if (!isEnabled) {
+    return <></>;
+  }
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        height: height ?? '200px',
+        marginBottom: marginBottom ?? '0px'
+      }}
+    >
       <div>
         <PrevNavButton onClick={prevOnClick} />
       </div>

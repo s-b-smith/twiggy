@@ -51,7 +51,7 @@ const BackgroundEditor = () => {
   };
 
   return (
-    <div className="overlay-component" style={{ zIndex: 0 }}>
+    <div className="overlay-component" style={{ zIndex: 0, overflowY: 'clip' }}>
       <TwiggyCarousel
         isEnabled={isEditorActive}
         index={backgroundIndex}

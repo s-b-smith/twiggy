@@ -33,38 +33,14 @@ const LegsCanvas = (canvasProps: CanvasProps & { key: React.Key }) => {
   return <Canvas style={{ height: '80%', marginBottom: '40px' }} {...canvasProps} />;
 };
 
-interface BodyIndices {
-  head: number;
-  body: number;
-  legs: number;
-}
-// const bodyIndices: BodyIndices = {
-//   head: 0,
-//   body: 0,
-//   legs: 0
-// };
-
-interface BodyEditorProps {
-  bodyIndices: BodyIndices;
-  setBodyIndices: React.Dispatch<React.SetStateAction<BodyIndices>>;
-}
-// { bodyIndices, setBodyIndices }: BodyEditorProps
-const BodyEditor = ({ bodyIndices, setBodyIndices }: BodyEditorProps) => {
+const BodyEditor = () => {
   const isEditorActive = useIsEditorActive(Editor.Body);
-  const nextHeadRef = useRef<(() => void) | null>(null);
-  const prevHeadRef = useRef<(() => void) | null>(null);
-  const nextBodyRef = useRef<(() => void) | null>(null);
-  const prevBodyRef = useRef<(() => void) | null>(null);
-  const nextLegsRef = useRef<(() => void) | null>(null);
-  const prevLegsRef = useRef<(() => void) | null>(null);
-  // const [bodyIndicesState, setBodyIndicesState] = useState(bodyIndices);
-  // const [headIndex, setHeadIndex] = useState(bodyIndices['head']);
-  // const [bodyIndex, setBodyIndex] = useState(bodyIndices['body']);
-  // const [legsIndex, setLegsIndex] = useState(bodyIndices['legs']);
-  // const [refresh, setRefresh] = useState(false);
-  // const headIndex = useMemo(() => bodyIndices['head'], [bodyIndices]);
-  // const bodyIndex = bodyIndices['body'];
-  // const legsIndex = bodyIndices['legs'];
+  const nextHeadClickRef = useRef<(() => void) | null>(null);
+  const prevHeadClickRef = useRef<(() => void) | null>(null);
+  const nextBodyClickRef = useRef<(() => void) | null>(null);
+  const prevBodyClickRef = useRef<(() => void) | null>(null);
+  const nextLegsClickRef = useRef<(() => void) | null>(null);
+  const prevLegsClickRef = useRef<(() => void) | null>(null);
 
   const headCanvases = useMemo(() => {
     return [
@@ -96,192 +72,66 @@ const BodyEditor = ({ bodyIndices, setBodyIndices }: BodyEditorProps) => {
     ];
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // const handleChange = (isNext: boolean, now: number | undefined, bodyIndex: keyof BodyIndices) => {
-  //   if (now === undefined) {
-  //     return;
-  //   }
-
-  //   if (now === 0) {
-  //     bodyIndices[bodyIndex] = 0;
-  //   } else {
-  //     if (isNext) {
-  //       bodyIndices[bodyIndex]++;
-  //     } else {
-  //       bodyIndices[bodyIndex]--;
-  //     }
-  //   }
-  // };
-
-  const handleChange = (isNext: boolean, bodyIndex: keyof BodyIndices) => {
-    let total;
-    // let setter;
-    switch (bodyIndex) {
-      case 'head':
-        total = headCanvases.length;
-        // setter = setHeadIndex;
-        break;
-      case 'body':
-        total = bodyCanvases.length;
-        // setter = setBodyIndex;
-        break;
-      case 'legs':
-        total = legsCanvases.length;
-        // setter = setLegsIndex;
-        break;
-    }
-    const currentIndex = bodyIndices[bodyIndex];
-    const newIndex = isNext ? currentIndex + 1 : currentIndex - 1;
-
-    if (newIndex >= total) {
-      setBodyIndices({ ...bodyIndices, [bodyIndex]: 0 });
-      // bodyIndices[bodyIndex] = 0;
-      // setter(0);
-    } else if (newIndex < 0) {
-      setBodyIndices({ ...bodyIndices, [bodyIndex]: total });
-      // bodyIndices[bodyIndex] = total - 1;
-      // setter(total - 1);
-    } else {
-      setBodyIndices({ ...bodyIndices, [bodyIndex]: newIndex });
-      // bodyIndices[bodyIndex] = newIndex;
-      // setter(newIndex);
-    }
-
-    // setBodyIndicesState(bodyIndices);
-  };
-
-  // const headNextButton = <NextNavButton onClick={() => handleChange(true, 'head')} />;
-  // const bodyNextButton = <NextNavButton onClick={() => handleChange(true, 'body')} />;
-  // const legsNextButton = <NextNavButton onClick={() => handleChange(true, 'legs')} />;
-  // const headPrevButton = <PrevNavButton onClick={() => handleChange(false, 'head')} />;
-  // const bodyPrevButton = <PrevNavButton onClick={() => handleChange(false, 'body')} />;
-  // const legsPrevButton = <PrevNavButton onClick={() => handleChange(false, 'legs')} />;
-
   // TODO: Double check if this css class is necessary after converting other carousels to controlled
+  // TODO: Wrapper component for each carousel
   return (
     <div className="overlay-component">
-      {/* <TwiggyCarousel
-            // index={stepsAwayFromStart['head']}
-            nextButton={headNextButton}
-            prevButton={headPrevButton}
-          >
-            {headCanvases}
-          </TwiggyCarousel>
-          <TwiggyCarousel nextButton={bodyNextButton} prevButton={bodyPrevButton}>
-            {bodyCanvases}
-          </TwiggyCarousel>
-          <TwiggyCarousel nextButton={legsNextButton} prevButton={legsPrevButton}>
-            {legsCanvases}
-          </TwiggyCarousel> */}
       <div className="overlay-container" style={{ height: '200px' }}>
         <div className="overlay-component" style={{ zIndex: 0 }}>
-          <TwiggyCarousel
-            isEnabled={isEditorActive}
-            // index={bodyIndices['head']}
-            // onNextClick={() => prevRef.current?.()}
-            // onPrevClick={() => nextRef.current?.()}
-            prevRef={prevHeadRef}
-            nextRef={nextHeadRef}
-          >
+          <TwiggyCarousel prevRef={prevHeadClickRef} nextRef={nextHeadClickRef}>
             {headCanvases}
           </TwiggyCarousel>
         </div>
         <div className="overlay-component">
           <CarouselNavArrows
+            isEnabled={isEditorActive}
             prevOnClick={() => {
-              // handleChange(false, 'head');
-              prevHeadRef.current?.();
+              prevHeadClickRef.current?.();
             }}
             nextOnClick={() => {
-              // handleChange(true, 'head');
-              nextHeadRef.current?.();
+              nextHeadClickRef.current?.();
             }}
           />
         </div>
       </div>
-      <div className="overlay-container" style={{ height: '200px' }}>
+      <div className="overlay-container" style={{ height: '175px' }}>
         <div className="overlay-component" style={{ zIndex: 0 }}>
-          <TwiggyCarousel
-            isEnabled={isEditorActive}
-            // index={bodyIndices['head']}
-            // onNextClick={() => prevRef.current?.()}
-            // onPrevClick={() => nextRef.current?.()}
-            prevRef={prevBodyRef}
-            nextRef={nextBodyRef}
-          >
+          <TwiggyCarousel prevRef={prevBodyClickRef} nextRef={nextBodyClickRef} height="175px">
             {bodyCanvases}
           </TwiggyCarousel>
         </div>
         <div className="overlay-component">
           <CarouselNavArrows
+            isEnabled={isEditorActive}
             prevOnClick={() => {
-              // handleChange(false, 'body');
-              prevBodyRef.current?.();
+              prevBodyClickRef.current?.();
             }}
             nextOnClick={() => {
-              // handleChange(true, 'body');
-              nextBodyRef.current?.();
+              nextBodyClickRef.current?.();
             }}
           />
         </div>
       </div>
       <div className="overlay-container" style={{ height: '200px' }}>
         <div className="overlay-component" style={{ zIndex: 0 }}>
-          <TwiggyCarousel
-            isEnabled={isEditorActive}
-            // index={bodyIndices['head']}
-            // onNextClick={() => prevRef.current?.()}
-            // onPrevClick={() => nextRef.current?.()}
-            prevRef={prevLegsRef}
-            nextRef={nextLegsRef}
-          >
+          <TwiggyCarousel prevRef={prevLegsClickRef} nextRef={nextLegsClickRef}>
             {legsCanvases}
           </TwiggyCarousel>
         </div>
         <div className="overlay-component">
           <CarouselNavArrows
+            isEnabled={isEditorActive}
             prevOnClick={() => {
-              // handleChange(false, 'legs');
-              prevLegsRef.current?.();
+              prevLegsClickRef.current?.();
             }}
             nextOnClick={() => {
-              // handleChange(true, 'legs');
-              nextLegsRef.current?.();
+              nextLegsClickRef.current?.();
             }}
           />
         </div>
       </div>
-      {/* <TwiggyCarousel
-        isEnabled={isEditorActive}
-        index={bodyIndices['body']}
-        onNextClick={() => handleChange(true, 'body')}
-        onPrevClick={() => handleChange(false, 'body')}
-      >
-        {bodyCanvases}
-      </TwiggyCarousel>
-      <TwiggyCarousel
-        isEnabled={isEditorActive}
-        index={bodyIndices['legs']}
-        onNextClick={() => handleChange(true, 'legs')}
-        onPrevClick={() => handleChange(false, 'legs')}
-      >
-        {legsCanvases}
-      </TwiggyCarousel> */}
-      {/* {!isEditorActive && (
-        <div className="canvas-overlay">
-          <StaticCanvasWrapper>{headCanvases[bodyIndices['head']]}</StaticCanvasWrapper>
-          <StaticCanvasWrapper>{bodyCanvases[0]}</StaticCanvasWrapper>
-          <StaticCanvasWrapper>{legsCanvases[0]}</StaticCanvasWrapper>
-        </div>
-      )} */}
     </div>
   );
 };
 
-{
-  /* <div className="canvas-overlay">
-          <StaticCanvasWrapper>{headCanvases[bodyIndices['head']]}</StaticCanvasWrapper>
-          <StaticCanvasWrapper>{bodyCanvases[0]}</StaticCanvasWrapper>
-          <StaticCanvasWrapper>{legsCanvases[0]}</StaticCanvasWrapper>
-        </div> */
-}
 export default BodyEditor;
